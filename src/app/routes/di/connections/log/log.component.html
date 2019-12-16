@@ -1,0 +1,8 @@
+<nz-spin *ngIf="!schema" class="modal-spin"></nz-spin>
+<div sv-container *ngIf="schema">
+  <sv label="Nombre">{{schema.nombre}}</sv>
+  <sv label="Frecuencia">{{ schema.frecuencia }}</sv>
+  <sv label="Estado">
+    <nz-badge [nzStatus]="BADGE[schema.estado].color" [nzText]="BADGE[schema.estado].text "></nz-badge>
+  </sv>
+</div>

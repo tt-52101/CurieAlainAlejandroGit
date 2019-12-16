@@ -1,0 +1,20 @@
+
+  <div class="main" *ngIf="param"> 
+    <div class="left">
+      <!--  FORMULARIO -->
+      <sf [schema]="schema" (formSubmit)="save($event)"></sf>
+    </div>
+
+  
+   <!-- <div class="right">
+      <div class="avatar_title">Perfil</div>
+      <div class="avatar"><img src="{{user.avatar}}" alt="Avatar"></div>
+      <nz-upload nzAction="/user/avatar" [nzShowUploadList]="false">
+        <button nz-button class="button_view">
+          <i nz-icon type="upload"></i>
+          <span>更换头像</span>
+        </button>
+      </nz-upload>
+    </div>-->
+  </div>
+

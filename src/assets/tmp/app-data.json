@@ -1,0 +1,187 @@
+{
+  "app": {
+    "name": "Curie Platform",
+    "description": "Ng-zorro admin panel front-end framework"
+  },
+  "user": {
+    "name": "Admin",
+    "avatar": "./assets/tmp/img/avatar.jpg",
+    "email": "cipchk@qq.com"
+  },
+  "menu": [
+    {
+      "text": "主导航",
+      "i18n": "menu.main",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "children": [
+        {
+          "text": "Addons",
+          "i18n": "menu.addons",
+          "icon": "anticon anticon-dashboard",
+          "children": [
+            {
+              "text": "File Manager",
+              "link": "/addons/fileManager?service=drive"
+            },
+            {
+              "text": "DriveTreeView",
+              "link": "/addons/driveTreeView"
+            },
+            {
+              "text": "Imputaciones",
+              "link": "/addons/imputation"
+            },
+            {
+              "text": "Kanban",
+              "link": "/addons/kanban"
+            },
+            {
+              "text": "Marketing Automation",
+              "link": "/addons/marketing-automation"
+            },
+            {
+              "text": "Newsletter",
+              "link": "/addons/newsletter"
+            },
+            {
+              "text": "Formulario",
+              "link": "/addons/form-build"
+            },
+            {
+              "text": "Inteligencia",
+              "link": "/addons/inteligencia"
+            },
+            {
+              "text": "Landing Page",
+              "link": "/addons/landingpage"
+            },
+            {
+              "text": "Tracking",
+              "link": "/addons/tracker"
+            },
+            {
+              "text": "FormModulos",
+              "link": "/addons/FormModulos"
+            }
+          ]
+        },
+        {
+          "text": "DI",
+          "i18n": "menu.di",
+          "icon": "anticon anticon-dashboard",
+          "children": [
+            {
+              "text": "My connections",
+              "link": "/di/connections"
+            },
+            {
+              "text": "PDI",
+              "link": "/di/pdi"
+            }
+          ]
+        },
+        {
+          "text": "CMS",
+          "icon": "anticon anticon-setting",
+          "children": [
+            {
+              "text": "Configuración del CMS",
+              "link": "/cms/config"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Pro",
+      "i18n": "menu.pro",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "children": [
+        {
+          "text": "Account",
+          "i18n": "menu.account",
+          "icon": "anticon anticon-user",
+          "children": [
+            {
+              "text": "center",
+              "link": "/pro/account/center",
+              "i18n": "menu.account.center"
+            },
+            {
+              "text": "settings",
+              "link": "/pro/account/settings",
+              "i18n": "menu.account.settings"
+            },
+            {
+              "text": "lock",
+              "link": "/passport/lock",
+              "i18n": "menu.account.lock"
+            },
+            {
+              "text": "login",
+              "link": "/passport/login",
+              "i18n": "menu.account.login"
+            },
+            {
+              "text": "login2",
+              "link": "/login2",
+              "i18n": "menu.account.login2"
+            },
+            {
+              "text": "login3",
+              "link": "/login3",
+              "i18n": "menu.account.login3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Settings",
+      "i18n": "menu.settings",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "children": [
+        {
+          "text": "System",
+          "i18n": "menu.system",
+          "icon": "anticon anticon-setting",
+          "children": [
+            {
+              "text": "File Manager",
+              "link": "/sys/file-manager",
+              "i18n": "menu.system.file-manager"
+            },
+            {
+              "text": "User",
+              "link": "/sys/user",
+              "i18n": "menu.system.user"
+            },
+            {
+              "text": "Menu",
+              "link": "/sys/menu",
+              "i18n": "menu.system.menu"
+            },
+            {
+              "text": "Permission",
+              "link": "/sys/permission",
+              "i18n": "menu.system.permission"
+            },
+            {
+              "text": "Role",
+              "link": "/sys/role",
+              "i18n": "menu.system.role"
+            },
+            {
+              "text": "Log",
+              "link": "/sys/log",
+              "i18n": "menu.system.log"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

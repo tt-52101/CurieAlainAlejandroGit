@@ -1,0 +1,143 @@
+ <full-content (fullscreen)=true style="height: 100vh !important;overflow: hidden !important;">
+
+   <div class="contentFormBuild">
+
+     <!-- CABECERA -->
+     <div class="headerFormBuild">
+       <div><img height="50px" width="65%" src="../../assets/img/logo-horizontal.svg"></div>
+       <div>
+         <p>Encuesta</p>
+       </div>
+       <div>
+        <i class="fas fa-save" nz-tooltip nzTitle="Guardar" nzPlacement="bottom" (click)="createMessage('success')"></i>
+         <i class="fas fa-trash-alt" nz-tooltip nzTitle="Borrar" nzPlacement="bottom" nz-popconfirm
+           nzTitle="¿Seguro que desea borrar?" (nzOnConfirm)="confirmTrash()" (nzOnCancel)="cancelTrash()"></i>
+         <i class="fas fa-door-open" nz-tooltip nzTitle="Ir al CRM" nzPlacement="bottom"></i>
+       </div>
+     </div>
+
+
+     <!-- CREACIÓN DE FORMULARIO  -->
+     <div class="buildForm">
+       
+        <!-- Panel Izquierdo -->
+        <div *ngIf="showPanelLeft"  class="panelLeftForm">
+          <div class="titleCreateForm">Herramientas</div>
+
+
+          <nz-tabset nzSize="large" [(nzSelectedIndex)]="moveTabLeft" style="text-align: center;">
+
+           <!-- Titulo & Descripción -->
+            <nz-tab nzTitle="Encuesta">
+                <div class="tituloDescripcion">
+                  <sf layout="vertical" [schema]="schema" (formChange)="changeTitleDescripcion($event)" [button]="null"></sf>
+                </div>
+                <div style="text-align: center;"><button nz-button style="background: #ffb643; color:white;" (click)="crearEncuesta()">Crear Encuesta</button></div>
+            </nz-tab>
+
+            <!-- PREGUNTAS -->
+            <nz-tab nzTitle="Preguntas">
+               <p> Selecciona el tipo de pregunta </p>
+              <div class="tiposRespuesta">
+                <ng-container *ngFor="let tipo of typesField">
+                    <div (click)="chooseType(tipo)"><img width="100%" [src]="tipo.img"></div>
+                </ng-container> 
+              </div>
+            </nz-tab>
+
+
+            <!-- PROPIEDADES -->
+            <nz-tab nzTitle="Propiedades" nzDisabled="showProperties">
+              <div class="propertiesForm">
+                  <sf #propertiesForm  layout="vertical" [schema]="schemaNow" [button]="null" style="overflow: scroll !important;" (formChange)="updateField($event)"></sf>
+              </div>
+            </nz-tab>
+
+         </nz-tabset>
+        </div>
+
+
+        <!-- ABRIR/CERRAR PANEL-->
+        <div class="PanelForm">
+          <button nz-button *ngIf="showPanel" id="closePanelForm" type="button" (click)="panelForm('close')" nz-tooltip
+            nzTitle="Cerrar panel" nzPlacement="right"> <i class="fas fa-chevron-left"></i></button>
+          <button nz-button *ngIf="!showPanel" id="openPanelForm" type="button" (click)="panelForm('open')"
+            nz-tooltip nzTitle="Abrir Panel" nzPlacement="right"> <i class="fas fa-chevron-right"></i></button>
+        </div>
+
+
+       <!-- BUILD -->
+       <div class="mainFormBuild">
+          <nz-tabset nzSize="large" >
+              
+            <!-- Lienzo -->
+               <nz-tab nzTitle="Lienzo">
+                  <div class="boxesFormBuild">
+                      <!-- TITULO & DESCRIPCIÓN -->
+                      <div class="tituloBox" (click)="goTitleDescripcion()">
+                        <h1>{{title}}</h1>
+                        <p>{{descricpion}}</p>
+                      </div>
+
+                      <br>
+
+                      <!-- CAMPOS  -->
+                      <div cdkDropList (cdkDropListDropped)="drop($event)">
+                        <div cdkDrag class="showCampos" *ngFor="let control of listOfControl; let i = index" (click)="chooseField(control,i)">
+                           <!-- <p *ngIf="control.properties['name'] === '' ">Elige el tipo de respuesta a tu pregunta</p>-->
+                           <p *ngIf="control.properties['name'] === 'Elige el tipo de respuesta a tu pregunta' "> Elige el tipo de respuesta a tu pregunta</p>
+                          
+                         
+                              <h3 style="text-align: left;" *ngIf="control.properties['name'] !== 'Elige el tipo de respuesta a tu pregunta' " >{{control.properties['name']}}
+                                <span *ngIf="(control.properties['required'] ===  true) && (control.properties['name'] !== 'Elige el tipo de respuesta a tu pregunta')" style="color:red">* </span>
+                                <a *ngIf="(control.properties['placeholder'] !==  '') && (control.properties['name'] !== 'Elige el tipo de respuesta a tu pregunta')"  nz-tooltip nzTitle="{{control.properties['placeholder']}}" nzPlacement="right">
+                                  <i style="font-size: 19px;" class="far fa-question-circle"></i>
+                                </a>
+                              </h3> 
+
+                              <p style="text-align: left;" *ngIf="(control.properties['descripcion'] !==  '') && (control.properties['name'] !== 'Elige el tipo de respuesta a tu pregunta')">{{control.properties['descripcion']}}</p>
+                      
+                            <div class="copyDelete">  <!-- ELIMINAR Y DUPLICAR -->
+                              <i class="fas fa-copy" nz-tooltip nzTitle="Duplicar" nzPlacement="bottom"></i>
+                              <i class="fas fa-trash-alt" nz-tooltip nzTitle="Borrar" nzPlacement="bottom" (click)="removeField(control, $event)"></i>
+                            </div>
+                        </div>
+                      </div>
+
+                      <a (click)="addField($event)" nz-tooltip nzTitle="Añadir nueva pregunta" nzPlacement="bottom">
+                          <img height="40px" src="../../assets/form-build/addField.svg" style="position: relative;bottom: 20px">
+                      </a>
+                </div>
+               </nz-tab>
+   
+               <!-- Previsualización -->
+               <nz-tab nzTitle="Previsualización">
+                  <div class="boxesFormBuild">
+                      <!-- TITULO & DESCRIPCIÓN -->
+                        <div class="previewForm">
+                          <h1>{{title}}</h1>
+                          <p>{{descricpion}}</p>
+                        </div>
+                        <br>
+                        <!-- CAMPOS -->
+                        <div class="showCampos" *ngFor="let control of listOfControl; let i = index" >
+                          <h4>{{control.properties['name']}}</h4>
+                          <p *ngIf="control.properties['name'] !== ''">Tu respuesta</p>
+                        </div>
+                  </div>
+               </nz-tab>
+   
+               <!-- Paginación -->
+               <nz-tab nzTitle="Paginación">
+                Próximamente
+               </nz-tab>
+          </nz-tabset>
+
+       </div>
+       <div>
+
+       </div>
+     </div>
+   </div>
+
+ </full-content>

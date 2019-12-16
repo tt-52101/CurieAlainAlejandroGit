@@ -1,0 +1,42 @@
+<page-grid>
+
+
+   <!-- DISEÑO -->
+   <h4 style="padding-left: 29px;">Diseño</h4>
+   <div class="layoutNewsletter">
+       <nz-card class="cardTemplates" *ngFor="let item of templatesDesign" nzHoverable [nzCover]="cover">
+           <ng-template #cover> 
+                 <img [src]="item.img" (click)="openTemplate(item)">
+           </ng-template>
+           <nz-card-meta nz-paragraph nzEllipsis [nzTitle]="item.name" nzDescription="info"></nz-card-meta>
+           <div class="lupa" (click)="showTemplate()">
+             <i style="font-size: 18px;" class="fas fa-search"></i>
+           </div>
+         </nz-card>   
+   </div>
+
+   <br>
+   
+  <!-- RECIENTES -->
+  <h4 style="padding-left: 29px;">Recientes</h4>
+  <div class="layoutNewsletter" >
+      <nz-card class="cardTemplates" *ngFor="let item of templatesCRM;let i = index" nzHoverable [nzCover]="cover">
+          <ng-template #cover > 
+            <img src="https://emailtuna.com/images/preview/160/1608632-zara-pretty-bold--new.jpg" (click)="openTemplateCRM(item)">
+          </ng-template>
+          <nz-card-meta nz-paragraph nzEllipsis [nzTitle]="item.name" nzDescription="info" ></nz-card-meta> 
+          <div class="lupa" (click)="showTemplate(item)">
+            <i style="font-size: 18px;" class="fas fa-search"></i>
+          </div>
+      </nz-card>   
+        <nz-modal id="previewModal" nzTitle="{{previewTitle}}" [(nzVisible)]="isVisible"  [nzStyle]="{ top: '20px' }" [nzFooter]="null" nzWidth="30%" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+          <!--<img style="margin:auto" [src]="previewImg" >-->
+          <img  style="margin:auto" src="https://emailtuna.com/images/preview/160/1608632-zara-pretty-bold--new.jpg">
+        </nz-modal>
+  </div>
+
+
+
+</page-grid>
+ 
+  

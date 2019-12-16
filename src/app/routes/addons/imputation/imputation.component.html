@@ -1,0 +1,166 @@
+<full-content (fullscreen)="true">
+  <page-header-wrapper>
+    <div class="header">
+      <div class="left">
+        <button nz-button nzType="primary" (click)="refreshData(date, true)" [disabled]="isStarted">
+          <i class="fas fa-sync" [ngClass]="{'fa-spin':refreshSpin}"></i>
+          <span>Recargar</span>
+        </button>
+        <button nz-button nzType="primary" (click)="quickImputation()" [hidden]="hideQuickImputation">
+          <span [hidden]="isStarted">
+            <i class="fas fa-play"></i>
+            <span>Empezar</span>
+          </span>
+          <span [hidden]="!isStarted">
+            <i class="fas fa-stop" [ngStyle]="{display:'inline-block', 'margin-right':'5px'}"></i>
+            <app-crono *ngIf="isStarted" [initTime]="cronoInitValue">
+            </app-crono>
+          </span>
+        </button>
+      </div>
+      <div class="center">
+        <nz-date-picker [(ngModel)]="date" (ngModelChange)="refreshData($event)" nzPlaceHolder="Seleccione día"
+          class="ant-btn" style="border: none" [nzDisabledDate]="disabledHigherDates" [nzLocale]="datepickerConfig">
+        </nz-date-picker>
+      </div>
+      <div class="right">
+      </div>
+    </div>
+    <nz-table #nzTable nzBordered [nzData]="tickets" [nzPageSize]="maxViewImputations"
+      [nzShowPagination]="tickets.length > maxViewImputations" [nzFooter]="footer" [nzLoadingIndicator]="tableSpinner"
+      [nzLoading]="tableLoading" compact-table>
+      <thead>
+        <tr [hidden]="selectedRegister.length < 1">
+          <th><label nz-checkbox (nzCheckedChange)="checkAllRegister($event)"></label></th>
+          <th colspan="6" class="masiveActions">
+            <a (click)="saveSelected()">
+              <i class="far fa-save"></i>
+              <span> Guardar</span>
+            </a>
+            <a (click)="removeSelected()">
+              <i class="far fa-trash-alt"></i>
+              <span> Borrar</span>
+            </a>
+          </th>
+        </tr>
+        <tr [hidden]="selectedRegister.length > 0">
+          <th><label nz-checkbox (nzCheckedChange)="checkAllRegister($event)"></label></th>
+          <th>Tarea</th>
+          <th>Descripción</th>
+          <th>Hora inicio</th>
+          <th>Hora fin</th>
+          <th>Duración</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ticket of tickets; let i = index"
+          (keydown.control.s)="$event.preventDefault(); saveEdit(ticket)" (dblclick)="prepareToEdit(ticket.id)"
+          [ngClass]="{emptyImputation: ticket.parent[0].label.length < 1 && !editCache[ticket.id].edit}">
+          <td>
+            <span>
+              <label nz-checkbox [(ngModel)]="ticket.checked" (nzCheckedChange)="checkRegister($event, ticket)"
+                [nzDisabled]="ticket.id === undefined"></label>
+            </span>
+          </td>
+          <td>
+            <ng-container *ngIf="editCache[ticket.id] !== undefined && !editCache[ticket.id].edit; else taskName">
+              <span (click)="openTask(ticket.parent[0])" nz-tooltip nzTitle="Ver tarea {{ticket.parent[0].id}}" clickable>{{ticket.parent[0].label}}</span>
+            </ng-container>
+            <ng-template #taskName>
+              <nz-select nzShowSearch nzPlaceHolder="Seleccione tarea" [(ngModel)]="ticket.parent[0].id"
+                [nzServerSearch]="taskServerSearch" (nzOnSearch)="searchTicket($event, ticket)"
+                (nzOpenChange)="updateParentInfo(ticket)" class="taskSelect" [nzDropdownMatchSelectWidth]="false">
+                <nz-option-group *ngFor="let project of projects" [nzLabel]="project">
+                  <nz-option *ngFor="let task of ticketsGroup(project)" nzCustomContent [nzLabel]="task.name"
+                    [nzValue]="task.id">
+                    <p class="optionWrapper">
+                      <span>{{task.name}}</span>
+                      <i class="fas fa-external-link-alt" nz-tooltip nzTitle="Ver tarea {{task.id}}" (click)="openTask(task, $event)"></i>
+                    </p>
+                  </nz-option>
+                </nz-option-group>
+              </nz-select>
+            </ng-template>
+          </td>
+          <td>
+            <ng-container
+              *ngIf="editCache[ticket.id] !== undefined && !editCache[ticket.id].edit; else taskDescription">
+              {{ticket.description}}
+            </ng-container>
+            <ng-template #taskDescription>
+              <input nz-input placeholder="Descripción de tarea" [(ngModel)]="ticket.description" />
+            </ng-template>
+          </td>
+          <td>
+            <ng-container
+              *ngIf="editCache[ticket.id] !== undefined && !editCache[ticket.id].edit || isStarted && ticket.id === undefined; else startTime">
+              {{ticket.date_start | date:'HH:mm'}}
+            </ng-container>
+            <ng-template #startTime>
+              <input nz-input type="time" [value]="convertDateToTime(ticket.date_start)"
+                (keydown.enter)="ticket.addTime(timePickerChange($event, ticket.date_start), 'start')">
+            </ng-template>
+          </td>
+          <td>
+            <ng-container
+              *ngIf="editCache[ticket.id] !== undefined && !editCache[ticket.id].edit || isStarted && ticket.id === undefined; else endTime">
+              {{ticket.date_end | date:'HH:mm'}}
+            </ng-container>
+            <ng-template #endTime>
+              <input nz-input type="time" [value]="convertDateToTime(ticket.date_end)"
+                (keydown.enter)="ticket.addTime(timePickerChange($event, ticket.date_end),'end')"
+                (keydown.control.s)="ticket.addTime(timePickerChange($event, ticket.date_end),'end')">
+            </ng-template>
+          </td>
+          <td>
+            <ng-container>
+              <span
+                *ngIf="!checkIsQuickImputation(ticket); else QuickImputationDuration">{{ticket.duration | hourFormat}}</span>
+              <ng-template #QuickImputationDuration>
+                <span [hidden]="!isStarted">En curso</span>
+              </ng-template>
+            </ng-container>
+          </td>
+          <td>
+            <span>
+              <ng-container *ngIf="editCache[ticket.id] !== undefined && !editCache[ticket.id].edit; else saveTpl">
+                <i class="fas fa-pen" title="Editar" (click)="prepareToEdit(ticket.id)"></i>
+                <nz-divider nzType="vertical" class="iconDivider"></nz-divider>
+                <i class="far fa-trash-alt" title="Eliminar" nz-popconfirm
+                  nzTitle="¿Seguro que quieres eliminar este registro?" (nzOnConfirm)="removeTask(ticket.id)"></i>
+                <nz-divider nzType="vertical" class="iconDivider"></nz-divider>
+                <i class="fas fa-external-link-alt" nz-tooltip nzTitle="Ver imputacion {{ticket.id}}"
+                  (click)="openTask(ticket)"></i>
+                </ng-container>
+                <ng-template #saveTpl>
+                  <i class="far fa-save" title="Guardar" (click)="saveEdit(ticket, {index: i + 1})"
+                  [hidden]="isStarted"></i>
+                  <nz-divider nzType="vertical" class="iconDivider" [hidden]="isStarted || ticket.id === undefined">
+                  </nz-divider>
+                  <i class="far fa-times-circle" title="Cancelar" (click)="cancelRollBack(ticket.id)"
+                  [hidden]="isStarted || ticket.id === undefined"></i>
+                  <i class="fas fa-external-link-alt" nz-tooltip nzTitle="Ver imputacion {{ticket.id}}"
+                    (click)="openTask(ticket)" [hidden]="!isStarted"></i>
+              </ng-template>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </page-header-wrapper>
+</full-content>
+
+<!-- Componente formulario  -->
+<app-call-modal-form *ngIf="isVisible" (close)="CallAttentionHandler($event)"></app-call-modal-form>
+
+<ng-template #footer>
+  <p class="footerTable">
+    <span class="totalHours">{{workedHours | hourFormat}}</span>
+    <span>horas trabajadas</span>
+  </p>
+</ng-template>
+
+<ng-template #tableSpinner>
+  <i nz-icon nzType="loading" nzTheme="outline"></i>
+</ng-template>

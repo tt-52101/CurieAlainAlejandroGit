@@ -1,0 +1,19 @@
+<!-- BUTTON -->
+<div class="upload_code">
+  <button nz-button nzType="primary" nzSize="large" (click)="showModal()">
+    <i nz-icon type="upload"></i>Subir código
+  </button>
+</div>
+
+<!-- MODAL -->
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Subir código" (nzOnCancel)="handleCancel()" (nzOnOk)="enviarDatos()" [nzOkLoading]="isOkLoading">
+      <p>Código HTML</p>
+      <nz-upload nzAction="https://jsonplaceholder.typicode.com/posts/" nzAccept="text/html" (nzChange)="openFileHtml($event)">
+        <button class="button_htmlcss" nz-button nzType="default" nzBlock nzShowUploadList="false">HTML</button>
+      </nz-upload>
+      <br>
+      <p>Código CSS</p>
+      <nz-upload nzAction="https://jsonplaceholder.typicode.com/posts/" nzAccept="text/css" (nzChange)="openFileCss($event)" >
+        <button class="button_htmlcss" nz-button nzType="default" nzBlock nzShowUploadList="false">CSS</button>
+      </nz-upload>
+</nz-modal>

@@ -1,0 +1,73 @@
+<full-content id="mainContainer">
+<div class="">
+  <!-- <div class="buttonsDiv">
+    <img class="logo" src="../../assets/img/curie3.png" />
+    <div nz-button nzType="primary" class="commandButton" (click)="generateJSON()"><i class="fa fa-save fa-2x"></i>&nbsp;&nbsp;Guardar</div>
+    <div nz-button nzType="primary" class="commandButton" (click)="togglePropsModal($event)"><i
+        class="fa fa-list-alt fa-2x"></i>&nbsp;&nbsp;Propiedades</div>
+    <div nz-button nzType="primary" class="commandButton" (click)="confirmDelete()"><i class="fa fa-eraser fa-2x"></i>&nbsp;&nbsp;Borrar</div>
+  </div> -->
+  <div class="headerMA">
+    <div><img height="50px" width="65%" src="../../assets/img/logo-horizontal.svg"></div>
+    <div>
+      <p>Workflow - Marketing</p>
+    </div>
+    <div>
+     <i class="fas fa-save" nz-tooltip nzTitle="Guardar" nzPlacement="bottom" (click)="generateJSON()"></i>
+    <i class="fas fa-trash-alt" nz-tooltip nzTitle="Borrar" nzPlacement="bottom" nz-popconfirm nzTitle="¿Seguro que desea borrar?" ></i>
+    <i class="fas fa-door-open" nz-tooltip nzTitle="Ir al CRM" nzPlacement="bottom"></i>
+    </div>
+  </div>
+
+  <div id="graphDiv"></div>
+
+  <nz-drawer [nzPlacement]="'left'" [(nzVisible)]="propsModalDisplay" [nzWidth]="500" nzTitle="Propiedades del nodo" (nzOnClose)="togglePropsModal();">
+      <sf id="propForm" #sf [schema]="formSchema" (formReset)="saveProperties($event)" (formSubmit)="saveProperties($event)" [button]="null">
+        <button type="submit" nzType="primary" nz-button [disabled]="!sf.valid"><i class="fa fa-save"></i>&nbsp;Guardar</button>
+        <button (click)="this.confirmDelete(); propsModalDisplay = false;" nzType="danger" type="button" nz-button><i class="fa fa-trash"></i>&nbsp;Borrar</button>
+      </sf>
+  </nz-drawer>
+  <nz-drawer style="margin-top:10%" [nzPlacement]="'left'"	[(nzVisible)]="nodesModalDisplay" [nzWidth]="500" nzTitle="Añadir un nodo" (nzOnClose)="toggleNodesModal($event);">
+    <!-- <nz-collapse nzAccordion>
+      <nz-collapse-panel *ngFor="let type of _nodeTypes" [nzHeader]="type" [nzActive]="true">
+        <ng-container *ngFor="let subType of _nodeSubtypes">
+          <div *ngIf="type === subType.type" class="nodeSubtypeDiv">
+            <div class="card nodeSubtype" (click)="insertNode(subType.type, subType.shortName)">
+              <div class="subtypeTitle"><h4>{{ subType.name }}</h4></div>
+              <div [ngClass]="{'nodeInfo': true}">
+                <div [ngClass]="{'nodeIcon': true}">{{ subType.icon }}</div>
+                <p>{{ subType.description }}</p>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </nz-collapse-panel>
+    </nz-collapse> -->
+
+      <nz-tabset [nzTabBarStyle]="{display: 'flex', 'flex-flow': 'row nowrap', 'justify-content': 'space-between'}" [nzSize]="'large'">
+        <nz-tab  [nzTitle]="titleTemplate" class="newNodes"  >
+          <ng-template #titleTemplate> <i nz-icon [nzType]="'check-circle'"></i> Acciones </ng-template>
+          <div class="newNodes">
+            <ng-container *ngFor="let item of _nodeSubtypes; let i = index" >
+              <div *ngIf="item.type === 'Acciones'" [ngClass]="[item.type, 'newNode']" (click)="insertNode(item.type, item.shortName)">
+                <div [ngClass]="{'nodeIcon': true}">{{ item.icon }}</div>
+                <span class="nodeInfo">{{item.name}}</span>
+              </div>
+            </ng-container>
+          </div>
+        </nz-tab>
+        <nz-tab  [nzTitle]="titleTemplate2" >
+          <ng-template #titleTemplate2> <i nz-icon [nzType]="'clock-circle'"></i> Eventos </ng-template>
+          <div class="newNodes">
+              <ng-container *ngFor="let item of _nodeSubtypes; let i = index" >
+                <div *ngIf="item.type === 'Eventos'"  [ngClass]="[item.type, 'newNode']" (click)="insertNode(item.type, item.shortName)">
+                  <div [ngClass]="{'nodeIcon': true}">{{ item.icon }}</div>
+                  <span class="nodeInfo">{{item.name}}</span>
+                </div>
+              </ng-container>
+            </div>
+        </nz-tab>
+      </nz-tabset>
+  </nz-drawer>
+</div>
+</full-content>

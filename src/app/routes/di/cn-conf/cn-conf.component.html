@@ -1,0 +1,30 @@
+<!-- Button to create connection -->
+<span class="go-back-span">
+  <button nz-button nzType="primary" routerLink="/di/pdi">
+    <i class="fas fa-arrow-left"></i> Go back
+  </button>
+  <br /><br />
+</span>
+
+<nz-table #nzConfigTable [nzData]="cnSettings">
+  <thead>
+    <tr>
+      <th>Módulo</th>
+      <th>Activo</th>
+      <th>Sinc. automática</th>
+      <th>Frecuencia</th>
+      <th>Última sincronización</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let cn of nzConfigTable.data">
+      <td>{{cn.module}}</td>
+      <td>{{cn.active}}</td>
+      <td>{{cn.autSync}}</td>
+      <td>{{cn.frecuency}}</td>
+      <td>{{cn.lastSync}}</td>
+    </tr>
+  </tbody>
+  <tfoot>
+  </tfoot>
+</nz-table>

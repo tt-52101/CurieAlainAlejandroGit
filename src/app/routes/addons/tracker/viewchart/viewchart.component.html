@@ -1,0 +1,29 @@
+<full-content (fullscreen)=true>
+  <nz-card nzTitle="Gráfica de campaña {{ actionname }}">
+    <div nz-card-grid [ngStyle]="gridStyle2">
+      <g2-bar height="250" [data]="dataGraficEmail"></g2-bar>
+    </div>
+    <div nz-card-grid [ngStyle]="gridStyle2">
+      <g2-pie [hasLegend]="true" [data]="dataGraficEmail" height="250">
+      </g2-pie>
+    </div>
+  </nz-card>
+  <nz-card nzTitle="Datos generales sobre la campaña {{ actionname }}">
+    <st #st2 [data]="dataCampains" [columns]="searchColumn" ps="5">
+      <ng-template *ngFor="let cus of custom; let i = index" [st-row]="custom[i]" type="title"> {{findcolumn(i).title}}
+        <nz-dropdown nzTrigger="click" [nzClickHide]="false" nzPlacement="bottomCenter" class="position-relative">
+          <div nz-dropdown class="d-inline-block pl-lg"><i nz-icon nzType="search" class="icon_search_fill ant-table-filter-icon"></i>
+          </div>
+          <div class="ant-table-filter-dropdown p-sm">
+            <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchInput[i]" class="width-sm mr-sm">
+            <button nz-button (click)="powerSearch(i)" [nzType]="'primary'">Buscar</button>
+            <button nz-button (click)="powerResetSearch(i)" [nzType]="'default'"><i nz-icon nzType="reload"
+                class="ant-table-filter-icon" nzTheme="outline"></i><small>1</small></button>
+            <button nz-button (click)="fullPowerResetSearch()" [nzType]="'default'"><i nz-icon nzType="reload"
+                class="ant-table-filter-icon" nzTheme="outline"></i><small>ALL</small></button>
+          </div>
+        </nz-dropdown>
+      </ng-template>
+    </st>
+  </nz-card>
+</full-content>

@@ -1,0 +1,70 @@
+<div class="breadcrums">
+  <i style="height: 100%" nz-icon type="folder"></i>
+  <a class="breadcrum" (click)="openPath(path_)" *ngFor="let path_ of path">
+    <span >{{path_.name}}</span>&nbsp;
+    <i nz-icon nzType="right" nzTheme="outline"></i>&nbsp;
+  </a>
+</div>
+<hr/>
+<nz-spin [nzSpinning]="loading" style="padding-left:3%">
+    <button nz-button style="float:right; margin-right: 10px; background-color: #ffbd4f" [nzType]="'primary'" (click)="createFileModal = true"><span>+</span></button>
+  <div *ngIf="showType == 'small'" class="file-manager__header">
+    <div class="file-manager__header-name">Filename</div>
+  </div>
+  <div class="file-manager" [ngClass]="{'file-manager__small': showType == 'small'}">
+    <div *ngIf="path.length > 1" (click)="back()" class="file-item">
+      <i class="fa fa-arrow-left fAwesomeIcon file-item__icon"></i>
+      <div class="file-item__name">Volver</div>
+    </div>
+    <div *ngFor="let i of list; let idx=index" class="file-item" [ngClass]="{'file-item__selected': i.selected}"
+      (click)="open(i)">
+      <i *ngIf="i.mimeType === 'application/vnd.google-apps.folder'" class="file-item__icon" nz-icon type="folder"></i>
+      <ng-container *ngIf="i.mimeType !== 'application/vnd.google-apps.folder'">
+        <i *ngIf="i.mimeType !== 'application/vnd.google-apps.folder' && !i.hasThumbnail" class="file-item__icon" nz-icon type="file"></i>
+        <img *ngIf="i.mimeType !== 'application/vnd.google-apps.folder' && i.hasThumbnail" class="file-item__icon" [src]="i.thumbnailLink" class="file-item__img" style="max-height: 7rem; max-width: 9rem" />
+        <!-- <div class="file-item__img" *ngIf="i.hasThumbnail" [ngStyle]="{'background-image': 'url('+ i.thumbnailLink +')', 'background-size': 'cover'}"></div> -->
+      </ng-container>
+      <div class="file-item__name">{{i.name}}</div>
+      <nz-dropdown>
+        <span class="dd-btn file-item__actions" nz-dropdown>
+          <i nz-icon type="ellipsis"></i>
+        </span>
+        <ul nz-menu>
+          <li nz-menu-item (click)="openFile(i.id, i.mimeType)">Abrir en Google Drive</li>
+          <li nz-menu-item (click)="rename(i)">Cambiar nombre</li>
+          <li nz-menu-item (click)="openPermissionChange(i)">Cambiar permisos</li>
+          <!-- <li nz-menu-item (click)="move(i)">Mover</li> -->
+          <li nz-menu-item>
+            <nz-popconfirm nzTitle="Confirmar?" (nzOnConfirm)="remove(i.id, idx)">
+              <span nz-popconfirm>Borrar</span>
+            </nz-popconfirm>
+          </li>
+        </ul>
+      </nz-dropdown>
+    </div>
+
+  </div>
+  <div class="text-center mt-md">
+    <nz-pagination [(nzPageIndex)]="s.pi" (nzPageIndexChange)="load(s.pi)" [nzPageSize]="s.ps" [nzTotal]="total" nzHideOnSinglePage></nz-pagination>
+  </div>
+  <div class="no-data" *ngIf="total === 0">
+  </div>
+</nz-spin>
+
+<nz-modal [(nzVisible)]="renameModel" nzTitle="" (nzOnOk)="renameOk()" (nzOnCancel)="renameModel=false" nzTitle="Renombrar">
+  <input nz-input name="renameTitle">
+</nz-modal>
+<nz-modal nzWidth="50%" [(nzVisible)]="moveModel" [nzFooter]="null" (nzOnCancel)="moveModel=false" nzTitle="Mover fichero">
+  <ng-container>
+    <sf #sfMoveElement class="moveFileSchema" [schema]="moveFileSchema" (formSubmit)="moveOk($event)"></sf>
+  </ng-container>
+</nz-modal>
+<nz-modal nzWidth="50%" [(nzVisible)]="createFileModal" [nzFooter]="null" (nzOnCancel)="createFileModal=false" nzTitle="Crear nuevo">
+  <ng-container>
+    <sf #createFileForm [schema]="createFileSchema" (formSubmit)="createFile($event)"  ></sf>
+  </ng-container>
+</nz-modal>
+<nz-modal nzWidth="50%" [(nzVisible)]="permissionModel" (nzOnOk)="changePermissions($event)"
+  (nzOnCancel)="permissionModel=false" nzFooter="" nzTitle="Modificar permisos">
+  <sf [schema]="permissionSchema" (formSubmit)="changePermissions($event)"></sf>
+</nz-modal>

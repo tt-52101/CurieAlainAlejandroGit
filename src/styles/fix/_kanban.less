@@ -1,0 +1,37 @@
+
+app-kanban{
+  .ant-card {
+    height: 100%;
+  }
+  .ant-card-body, .ant-card-body .droplist{
+    height: calc(100% - 56px);
+  }
+  
+  .ant-card-body{
+    overflow-y: scroll;
+    overflow-x:hidden;
+    scrollbar-width: thin;
+    scrollbar-color: darkslategray lightgray;
+  }
+  
+  .ant-card{
+    margin:0;
+  }
+  
+  // Scrollbar styles
+  
+  // Chrome
+  .ant-card-body::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  //All
+  .ant-card-body::-webkit-scrollbar-track {
+    background: lightgray;
+  }
+  .ant-card-body::-webkit-scrollbar-thumb {
+    background-color: darkslategray;
+    outline: 1px solid slategrey;
+  }
+  
+}

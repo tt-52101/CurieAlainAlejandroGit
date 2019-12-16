@@ -1,0 +1,46 @@
+// region: PLACEHOLDER, IMPORTANT: don't remove
+@import '~@delon/theme/styles/index';
+@import '~@delon/abc/index';
+@import '~@delon/chart/index';
+@import 'app/layout/pro/styles/index';
+@import '~@delon/theme/styles/layout/fullscreen/index';
+
+@import './styles/index';
+@import './styles/theme';
+// endregion
+
+
+// angular material
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+// Tema compacto para tablas
+@compactSize: 5px;
+
+[compact-table], .compact-table{
+  .ant-table-tbody > tr > td, .ant-table-thead > tr > th, .ant-table-footer {
+    padding: @compactSize;
+  }
+}
+
+
+body{
+  background: #f0f2f5 !important;
+}
+
+.AddButtonStyle(@color){
+  border:none;
+  background: @color;
+  color:white;
+}
+
+.addButton{
+  .AddButtonStyle(orange);
+}
+.addButton:hover,.addButton:focus{
+  .AddButtonStyle(darkorange);
+}
+
+[clickable]{
+  cursor: pointer;
+}

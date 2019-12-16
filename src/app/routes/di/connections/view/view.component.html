@@ -1,0 +1,9 @@
+<nz-spin *ngIf="!schema" class="modal-spin"></nz-spin>
+<div sv-container *ngIf="schema" [col]=1 [size]="small">
+  <sv label="Nombre">{{ schema.nombre }}</sv>
+  <sv label="Origen">{{ schema.origen }}</sv>
+  <sv label="Base de datos(origen)">{{ schema.origendatabase }}</sv>
+  <sv label="Destino">{{ schema.destino }}</sv>
+  <sv label="Base de datos(destino)">{{ schema.destdatabase }}</sv>
+  <sv label="Fecha de Creacion">{{ schema.f_creacion }}</sv>
+</div>

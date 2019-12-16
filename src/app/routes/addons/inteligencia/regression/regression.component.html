@@ -1,0 +1,38 @@
+<!-- VOLVER -->
+<button nz-button nzType="default" (click)="cancelar()"  >Volver</button>
+<br><br>
+<h3>Esto no es regresión, sino predecir un cluster, se puso aquí de momento</h3>
+<!-- TODO: Se debe rellenar automáticamente con los clusters disponibles -->
+<div nz-row><div nz-col [nzSpan]="4">cluster              :</div><div nz-col [nzSpan]="4">
+<nz-select [(ngModel)]="cluster" nzPlaceHolder="Choose" style="width: 100%;">
+    <nz-option nzValue="ale" nzLabel="ale"></nz-option>
+    <nz-option nzValue="marcos" nzLabel="marcos"></nz-option>
+</nz-select>
+</div></div>
+<div nz-row><div nz-col [nzSpan]="4">crmid              :</div><div nz-col [nzSpan]="4"><input type="number" nz-input placeholder="crmid"               [(ngModel)]="crmid"               ></div></div>
+<div nz-row><div nz-col [nzSpan]="4">ingresos           :</div><div nz-col [nzSpan]="4"><input type="number" nz-input placeholder="ingresos"            [(ngModel)]="ingresos"            ></div></div>
+<div nz-row><div nz-col [nzSpan]="4">empleados          :</div><div nz-col [nzSpan]="4"><input type="number" nz-input placeholder="empleados"           [(ngModel)]="empleados"           ></div></div>
+<div nz-row><div nz-col [nzSpan]="4">CNAE               :</div><div nz-col [nzSpan]="4"><input type="number" nz-input placeholder="CNAE"                [(ngModel)]="CNAE"                ></div></div>
+<div nz-row><div nz-col [nzSpan]="4">Postal             :</div><div nz-col [nzSpan]="4"><input type="number" nz-input placeholder="Postal"              [(ngModel)]="Postal"              ></div></div>
+<div nz-row><div nz-col [nzSpan]="4">Cliente Potencial  :</div><div nz-col [nzSpan]="4"><input type="number" nz-input placeholder="Cliente Potencial"   [(ngModel)]="ClientePotencial"    ></div></div>
+<div nz-row><div nz-col [nzSpan]="4">Partner Potencial  :</div><div nz-col [nzSpan]="4"><input type="number" nz-input placeholder="Partner Potencial"   [(ngModel)]="PartnerPotencial"    ></div></div>
+<div nz-row><div nz-col [nzSpan]="4">Cliente Actual     :</div><div nz-col [nzSpan]="4"><input type="number" nz-input placeholder="Cliente Actual"      [(ngModel)]="ClienteActual"       ></div></div>
+<div nz-row><div nz-col [nzSpan]="4">Partner Actual     :</div><div nz-col [nzSpan]="4"><input type="number" nz-input placeholder="Partner Actual"      [(ngModel)]="PartnerActual"       ></div></div>
+<div nz-row><div nz-col [nzSpan]="4">Proveedor          :</div><div nz-col [nzSpan]="4"><input type="number" nz-input placeholder="Proveedor"           [(ngModel)]="Proveedor"           ></div></div>
+<div nz-row><div nz-col [nzSpan]="4">Otro               :</div><div nz-col [nzSpan]="4"><input type="number" nz-input placeholder="Otro"                [(ngModel)]="Otro"                ></div></div>
+<div nz-row><div nz-col [nzSpan]="4">FormaLegal1        :</div><div nz-col [nzSpan]="4"><input type="number" nz-input placeholder="FormaLegal1"         [(ngModel)]="FormaLegal1"         ></div></div>
+<div nz-row><div nz-col [nzSpan]="4">FormaLegal2        :</div><div nz-col [nzSpan]="4"><input type="number" nz-input placeholder="FormaLegal2"         [(ngModel)]="FormaLegal2"         ></div></div>
+<div nz-row><div nz-col [nzSpan]="4">FormaLegal3        :</div><div nz-col [nzSpan]="4"><input type="number" nz-input placeholder="FormaLegal3"         [(ngModel)]="FormaLegal3"         ></div></div>
+<div nz-row><div nz-col [nzSpan]="4">FormaLegal4        :</div><div nz-col [nzSpan]="4"><input type="number" nz-input placeholder="FormaLegal4"         [(ngModel)]="FormaLegal4"         ></div></div>
+<div nz-row><div nz-col [nzSpan]="4">FormaLegal5        :</div><div nz-col [nzSpan]="4"><input type="number" nz-input placeholder="FormaLegal5"         [(ngModel)]="FormaLegal5"         ></div></div>
+<br>
+
+<button nz-button nzType="primary" nzSize="large" (click)="predecir()"  >Predecir</button>
+
+<pre>{{output | json}}</pre>
+
+
+
+
+
+

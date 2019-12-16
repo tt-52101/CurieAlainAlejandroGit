@@ -1,0 +1,93 @@
+@alain-default-content-heading-bg: #FFFFFF;
+@alain-default-content-padding: 0px;
+
+
+
+#previewModal .ant-modal-body{
+    display: flex !important;
+    justify-content: center !important;
+}
+
+
+app-templates-newsletter-layout {
+    
+    .ant-card-cover > * {
+        display: block;
+        width: 65%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .ant-card-body{
+        padding: 15px !important;
+        text-align: center;
+    }
+
+    .cardTemplates {
+        width: 16%;
+        margin: 20px 25px 40px 26px;
+        border: 1px solid #bfbfbf;
+
+    }
+
+    .layoutNewsletter{
+        display: flex; 
+        flex-flow: row wrap; 
+       // justify-content: space-around;
+      //  align-items: flex-start; 
+       // padding-left: 15px;
+      //  padding-right: 15px;
+    }
+    .layoutNewsletter::after {
+        content: "";
+        flex: auto;
+    }
+    
+    /* Card hover */
+    .ant-card-hoverable:hover{
+        filter: drop-shadow(2px 4px 6px black);
+    }
+
+    
+    
+    
+
+}
+
+
+.lupa{
+    width: 50px;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    padding: 7px;
+    height: 35px;
+    text-align: center;
+}
+
+.lupa:hover{
+    color: white;
+    background-color: #716b67;
+}
+
+
+.ant-layout-content {
+    padding: 0;
+    margin:0;
+    background-color: white;
+    overflow: hidden;
+}
+full-content{
+    overflow: auto !important;
+    height: auto;
+    padding: 0;
+    margin: 0;
+}
+app-templates-newsletter {
+    background: #fff;
+    display: block;
+    padding: 0;
+    margin:0;
+  }
+
+

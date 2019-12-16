@@ -1,0 +1,27 @@
+@{full-content-prefix} {
+    &__opened {
+      layout-pro-header,
+      @{alain-pro-prefix}__sider,
+      reuse-tab {
+        display: none !important;
+      }
+    }
+    &__hidden-title {
+      .ant-breadcrumb{
+        display: none !important;
+      }
+      /* page-header {
+        display: none !important;
+      } */
+      .ant-layout-footer, .alain-pro__footer{
+        display: none !important;
+      }
+      .full-content{
+        height: 100vh;
+
+        /*>div{
+          height: 100%;
+        }*/
+      }
+    }
+}

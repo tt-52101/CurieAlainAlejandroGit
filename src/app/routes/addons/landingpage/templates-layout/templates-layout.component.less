@@ -1,0 +1,17 @@
+.layoutLandingpage{
+    display: flex; 
+    flex-flow: row wrap; 
+    justify-content: space-around;
+    align-items: flex-start; 
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.layoutLandingpage::after {
+    content: "";
+    flex: auto;
+}
+
+/* Card hover */
+.ant-card-hoverable:hover{
+    filter: drop-shadow(2px 4px 6px black);
+}

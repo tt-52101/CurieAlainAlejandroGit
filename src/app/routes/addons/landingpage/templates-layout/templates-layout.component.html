@@ -1,0 +1,29 @@
+
+<page-grid>
+
+  <!-- RECIENTES -->
+  <h4 style="padding-left: 29px;">Recientes</h4>
+  <div class="layoutLandingpage" >
+      <nz-card style="width: 18%;margin:10px; margin-bottom: 40px; padding:10px;border:1px solid #bfbfbf" *ngFor="let item of templatesCRM;" nzHoverable [nzCover]="cover">
+          <ng-template #cover > 
+            <img src="https://emailtuna.com/images/preview/160/1608632-zara-pretty-bold--new.jpg" (click)="openTemplateCRM(item)" >
+          </ng-template>
+          <nz-card-meta nz-paragraph nzEllipsis [nzTitle]="item.name" nzDescription="info"></nz-card-meta> 
+      </nz-card> 
+  </div>
+
+  <br>
+
+  <!-- DISEÑO -->
+  <h4 style="padding-left: 29px;">Diseño</h4>
+  <div class="layoutLandingpage">
+      <nz-card style="width: 18%;margin:10px; margin-bottom: 40px;border:1px solid #bfbfbf" *ngFor="let item of templatesDesign" nzHoverable [nzCover]="cover" >
+          <ng-template #cover> 
+              <img [src]="item.img" (click)="openTemplate(item)">
+         </ng-template>
+          <nz-card-meta nz-paragraph nzEllipsis [nzTitle]="item.name" nzDescription="info">
+          </nz-card-meta>
+        </nz-card>   
+  </div>
+
+</page-grid>

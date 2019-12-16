@@ -1,0 +1,99 @@
+<page-header-wrapper>
+  <full-content (fullscreen)=true>
+    <nz-tabset [nzSize]="'default'">
+      <nz-tab nzTitle="{{i18n.fanyi('app.tracker.ventana.title1')}}">
+        <!-- Boton para la creación de un nuevo sitio web. -->
+        <button nz-button nzType="primary" (click)="showModal(1)">
+          <span>{{i18n.fanyi('app.tracker.button.addsite')}}</span>
+        </button>
+        <!-- Modal que visualizar el boton anterior -->
+        <nz-modal [(nzVisible)]="isVisible" nzTitle="{{i18n.fanyi('app.tracker.modal1.title')}}"
+          (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk(sitioweb.value,dominio.value,1)" [nzOkLoading]="isOkLoading">
+          <div>
+            <label>{{i18n.fanyi('app.tracker.modal1.input')}}</label>
+            <input nz-input placeholder="{{i18n.fanyi('app.tracker.modal1.placehold')}}" #sitioweb />
+          </div>
+          <br>
+          <div style="margin-bottom: 16px;">
+            <label>{{i18n.fanyi('app.tracker.modal1.domain')}}</label>
+            <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
+              <input type="text" nz-input #dominio required />
+            </nz-input-group>
+            <ng-template #addOnBeforeTemplate>
+              <nz-select [ngModel]="'Http://'" required>
+                <nz-option [nzLabel]="'Http://'" [nzValue]="'Http://'"></nz-option>
+                <nz-option [nzLabel]="'Https://'" [nzValue]="'Https://'"></nz-option>
+              </nz-select>
+            </ng-template>
+          </div>
+        </nz-modal>
+        <nz-modal [(nzVisible)]="isVisibleModel2" [nzFooter]="modalFooter"
+          nzTitle="{{i18n.fanyi('app.tracker.modal2.title')}}" [nzOkLoading]="isOkLoadingModel2">
+          <div>
+            <label for="contenido">{{i18n.fanyi('app.tracker.modal2.content')}}</label>
+            <p>
+              {{ codigoToInsert }}
+            </p>
+          </div>
+        </nz-modal>
+        <ng-template #modalFooter>
+          <button nz-button nzType="primary" (click)="handleOk(sitioweb.value,dominio.value,2)"
+            [nzLoading]="isOkLoadingModel2">Ok</button>
+        </ng-template>
+        <!--Modal para mostrar el codigo de seguimiento de cada sitio web-->
+        <nz-modal #modal [(nzVisible)]="isVisible3" [nzFooter]="modalFooter2"
+          nzTitle="{{i18n.fanyi('app.tracker.modal2.title')}}" (nzOnOk)="handleOk2()">
+          <p>{{ codigoSeguimiento}}</p>
+        </nz-modal>
+        <ng-template #modalFooter2>
+          <button nz-button nzType="primary" (click)="handleOk2()">Ok</button>
+        </ng-template>
+        <!--Tabla de datos desplegables-->
+        <st #st [data]="websites[0]" [columns]="columns" [expand]="expand" [loadingDelay]="3000">
+          <ng-template *ngFor="let cus of custom; let i = index" [st-row]="custom[i]" type="title">
+            {{findcolumn(i).title}}
+            <nz-dropdown nzTrigger="click" [nzClickHide]="false" nzPlacement="bottomCenter" class="position-relative">
+              <div nz-dropdown class="d-inline-block pl-lg"><i nz-icon nzType="search"
+                  class="icon_search_fill ant-table-filter-icon"></i>
+              </div>
+              <div class="ant-table-filter-dropdown p-sm">
+                <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchInput[i]"
+                  class="width-sm mr-sm">
+                <button nz-button (click)="powerSearch(i)" [nzType]="'primary'">Buscar</button>
+                <button nz-button (click)="powerResetSearch(i)" [nzType]="'default'"><i nz-icon nzType="reload"
+                    class="ant-table-filter-icon" nzTheme="outline"></i><small>1</small></button>
+                <button nz-button (click)="fullPowerResetSearch()" [nzType]="'default'"><i nz-icon nzType="reload"
+                    class="ant-table-filter-icon" nzTheme="outline"></i><small>ALL</small></button>
+              </div>
+            </nz-dropdown>
+          </ng-template>
+          <ng-template #expand let-item let-index="index" let-column="column">
+            <div nz-row [nzGutter]="16">
+              <div nz-col nzXs="100" nzSm="12" [id]="'contenedor' + index" #div>
+              </div>
+              <div nz-col nzXs="30" nzSm="12">
+                <st #st2 [data]="websiteskeyword[index]" [columns]="searchColumn" ps="5" [page]="{toTopInChange:false}">
+                </st>
+              </div>
+            </div>
+          </ng-template>
+        </st>
+      </nz-tab>
+      <nz-tab nzTitle="{{i18n.fanyi('app.tracker.ventana.title2')}}">
+        <nz-card style="width:100%;text-align:center" nzTitle="Campaings">
+          <div>
+            <nz-dropdown>
+              <a nz-dropdown>{{i18n.fanyi('app.tracker.ventana.dropbox')}}<i nz-icon type="down"></i> </a>
+              <ul nz-menu>
+                <li nz-menu-item *ngFor="let item of websites" (click)="loadCampaignTable(item.id)"> {{item.sitioweb}}
+                </li>
+              </ul>
+            </nz-dropdown>
+          </div>
+          <div>
+            <st [data]="dataCampaign" #tablaCampañas [columns]="campaingColumn"></st>
+          </div>
+        </nz-card>
+      </nz-tab>
+    </nz-tabset>
+  </full-content>

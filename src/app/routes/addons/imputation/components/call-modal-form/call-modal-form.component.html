@@ -1,0 +1,57 @@
+<nz-modal #modal nzWrapClassName="vertical-center-modal" nzVisible="true" [nzTitle]="modalTitle" nzWidth="60%"
+  [nzStyle]="{'top':'5%'}" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()">
+  <ng-template #modalTitle>
+    <i class="fas fa-phone-alt"></i>
+    <span> Atención Telefónica</span>
+  </ng-template>
+  <ng-template #modalContent>
+    <div class="subheader">
+      <span class="time">Hora de inicio: {{ start_date | date:'HH:mm' }}</span>
+      <button nz-button nzType="default" (click)="handleOk(newIncidence)"
+        [disabled]="clients.length === 0 || newIncidence.name.length === 0">Finalizar llamada</button>
+    </div>
+    <nz-divider></nz-divider>
+    <p class="tabs">
+      <nz-radio-group [(ngModel)]="newIncidence.mod" nzButtonStyle="solid">
+        <label *ngFor="let option of radioOptions" nz-radio-button [nzValue]="option.value">{{option.label}}</label>
+      </nz-radio-group>
+    </p>
+    <label><span>*</span>Cliente:</label>
+    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Cliente que ha contactado" [(ngModel)]="parent.client.id"
+      (ngModelChange)="changeSelectData($event)">
+      <nz-option *ngFor="let client of clients" [nzValue]="client.id" [nzLabel]="client.recordLabel" ngDefaultControl>
+      </nz-option>
+    </nz-select>
+    <label><span>*</span>Contacto:</label>
+    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Persona que ha contactado" [(ngModel)]="parent.contact.id">
+      <nz-option *ngFor="let contact of clientContact" [nzValue]="contact.id" [nzLabel]="contact.label"
+        ngDefaultControl>
+      </nz-option>
+    </nz-select>
+    <label><span>*</span>Asunto:</label>
+    <input nz-input placeholder="Asunto del problema" [(ngModel)]="newIncidence.name" ngDefaultControl required />
+    <label><span>*</span>Descripción:</label>
+    <input nz-input placeholder="Descripción del problema" [(ngModel)]="newIncidence.description" ngDefaultControl />
+    <label><span>*</span>Contrato de cliente:</label>
+    <nz-select nzShowSearch nzAllowClear id="contratos" [(ngModel)]="parent.contract.id"
+      nzPlaceHolder="Seleccione contrato">
+      <nz-option *ngFor="let agr of agreements" [nzValue]="agr.id" [nzLabel]="agr.label" ngDefaultControl>
+      </nz-option>
+    </nz-select>
+    <label><span>*</span>Asignar a:</label>
+    <nz-select nzShowSearch nzAllowClear [(ngModel)]="newIncidence.user" nzPlaceHolder="Trabajador a asignar"
+      [nzServerSearch]="true" (nzOnSearch)="searchName($event)">
+      <nz-option *ngFor="let user of usersToAssign" [nzValue]="user.id" [nzLabel]="user.label" ngDefaultControl>
+      </nz-option>
+    </nz-select>
+  </ng-template>
+  <ng-template #modalFooter>
+    <!-- <button nz-button nzType="default" (click)="incidenceCreation()"[disabled]="agreements.length === 0">
+      <span>Resolver</span>
+    </button> -->
+    <button nz-button nzType="default" (click)="incidenceCreation()">
+      <!-- [disabled]="agreements.length === 0" -->
+      <span>Traspasar</span>
+    </button>
+  </ng-template>
+</nz-modal>

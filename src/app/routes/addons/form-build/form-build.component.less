@@ -1,0 +1,345 @@
+
+// Content 
+.contentFormBuild{
+    background-color: #f3f2f2;
+}
+
+/*
+* CABECERA
+*/
+
+// Cabecera
+.headerFormBuild{
+    height: 75px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #15c393;
+    color: white;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+
+// Cabecera - titulo
+.headerFormBuild p {
+  font-size: 2.5em;
+}
+
+// Cabecera - logo
+.headerFormBuild div:first-child {
+  padding: 5px;
+}
+
+// Cabecera - botones
+.headerFormBuild div:last-child {
+  font-size: 1.7em;
+  padding: 11px;
+}
+
+// Cabecera - botones
+.headerFormBuild i {
+  margin: 0 16px 0 16px;
+  cursor: pointer;
+}
+
+// Cabecera - boton CRM
+.headerFormBuild .fa-door-open{
+  padding: 5px;
+  border-radius: 5px;
+}
+
+
+/*
+* CONSTRUCTOR FORMULARIO
+*/
+
+// Contenedor para construir el formulario
+.buildForm{
+  margin-top: 75px;
+  height: 100vh;
+  display: flex;
+}
+
+// panel izquierdo
+.panelLeftForm{
+ // background-color: #e6e9ec;
+  background: white;
+  flex-basis: 530px;
+  height: 100% ;
+  box-shadow: 3px 3px 5px 2px #ccc;
+ // overflow-x: hidden;
+  overflow: hidden;
+}
+// panel izquierdo - titulo
+.titleCreateForm{
+  height: 38px;
+  padding: 6px;
+  background-color: #0BA07A;
+  color: white;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  text-align: center;
+}
+
+
+/*
+* Titulo & Descripción
+*/
+.tituloDescripcion div:first-child, .propertiesForm div:first-child{
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  height: 50px;
+  padding: 10px 16px;
+  background: #efefef;
+  text-align: center;
+  border-bottom: 3px solid #406D63;
+  font-size: 1.2em;
+  color: #666666;
+}
+.tituloDescripcion sf, .propertiesForm sf {
+  background-color: white;
+  padding: 20px;
+}
+
+.tituloDescripcion i , .propertiesForm i {
+  margin-right: 10px; 
+}
+
+
+/* 
+* Tipo de Respuesta
+*/
+.bloqueTipoRespuesta .titleType{
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  height: 50px;
+  padding: 10px 16px;
+  background: #efefef;
+  text-align: center;
+  border-bottom: 3px solid #406D63;
+  font-size: 1.2em;
+  color: #666666;
+}
+
+.bloqueTipoRespuesta i {
+  margin-right: 10px;
+}
+
+.tiposRespuesta{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.tiposRespuesta > div{
+  margin: 7px;
+  border: 1px solid #666666;
+  border-radius: 3px;
+}
+
+.tiposRespuesta div:hover{
+  border: 2px solid #406D63;
+  cursor: pointer;
+}
+
+
+
+/*
+* Constructor Formulario - Cajas principales
+*/
+
+.mainFormBuild{
+  height: 90vh;
+  overflow: scroll;
+  padding: 30px;
+  text-align: center;
+  font-family: 'Lato', sans-serif ;
+  color: #556068 ;
+  width: 100%;
+}
+
+.boxesFormBuild{
+  width: 70%;
+  height: 150px;
+  display: inline-block;
+  word-wrap: break-word;
+  box-shadow: 0px 0px 3px 2px #ccc;
+  background-color: white;
+}
+
+/*
+* Preguntas
+*/
+
+.boxesFormBuild .showCampos, .boxesFormBuild .tituloBox{
+  width: 100%;
+  height: 150px;
+  padding: 25px;
+}
+.boxesFormBuild .showCampos:hover, .boxesFormBuild .tituloBox:hover{
+  box-shadow: 0px 0px 3px 2px #ccc;
+  border-left: 6px solid #0e5146;
+  cursor: pointer;
+}
+
+.tituloBox{
+  height: 150px;
+  padding: 30px;
+}
+.tituloBox h1{
+  font-family: 'Lato', sans-serif;
+  font-weight: bold;
+}
+
+
+// botones copiar-eliminar
+.copyDelete i{
+  margin: 0 13px 0 13px;
+  cursor: pointer;
+}
+
+.copyDelete{
+  font-size: 18px;
+  padding: 3px;
+  color: white;
+  background-color: #666666;
+  float: right;
+  position: relative;
+  bottom: -12px;
+}
+
+
+.showCampos{
+  height: 150px;
+  background-color: white;
+  padding: 50px 0 50px 0;
+  margin: 5px 0 5px 0;
+}
+
+.showCampos:hover{
+  box-shadow: 0px 0px 3px 2px #ccc;
+  border-left: 6px solid #0e5146;
+}
+
+
+
+/*
+* Drag & Drop
+*/
+.cdk-drag-preview {
+ box-sizing: border-box;
+ box-shadow: 0px 0px 3px 2px #ccc;
+ border-left: 6px solid #0e5146;
+ text-align: center;
+}
+.cdk-drag-placeholder {
+	opacity: 0;
+}
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1)
+}
+.example-box:last-child {
+	border: none;
+}
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+	transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+} 
+
+
+
+// chino
+  .fa-times-circle{
+    cursor: pointer;
+    position: relative;
+    top: 4px;
+    font-size: 24px;
+    color: #999;
+    transition: all 0.3s;
+  }
+
+  .fa-times-circle:hover {
+    color: #777;
+  }
+
+  
+
+  
+
+
+  .addTituloDescripcion {
+      border:none;
+      margin-bottom: 15px;
+      text-align: center;
+      background-color: #1A1A1A;
+  }
+
+  // inputs preguntas
+  .stylesInputs{
+    border:none;
+    width: 40%;
+    margin-right: 10%;
+    font-family: Lato, sans-serif;
+    font-weight: 200;
+    margin-right: 10%;
+    font-size: x-large;
+  }
+  .stylesInputs:focus{
+    box-shadow: 0px 1px 0px 0px black !important;
+    box-shadow: none;
+    border-bottom: 1px solid black;
+    border-radius: 0px;
+  }
+
+  .addTituloDescripcion:focus{
+    box-shadow: 0px 1px 0px 0px black !important;
+    box-shadow: none;
+    border-bottom: 1px solid black;
+    border-radius: 0px;
+  }
+
+
+
+  // CAMBIAR COLORES DEL PLACEHOLDER 
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+   // color: #181717;
+    color:white;
+    opacity: 1; /* Firefox */
+}
+
+
+
+
+
+
+
+ 
+
+.PanelForm{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#closePanelForm, #openPanelForm{
+  background-color: #406D63;
+  color: white;
+  height: 8%;
+  padding: 5px;
+  width: 28px;
+}
+
+.previewBox{
+  width: 100%;
+  height: 150px;
+  padding: 20px;
+  background-color: white;
+}
+
+
+
+
+
+
+

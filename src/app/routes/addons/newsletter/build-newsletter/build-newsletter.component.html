@@ -1,0 +1,101 @@
+<full-content (fullscreen)=true style="height: 100vh !important;overflow: hidden !important;">
+
+  <!-- CABECERA -->
+  <div class="panel-top" style="display: flex;justify-content: space-between;background-color: #15c393">
+    <div id="logo_newsletter">
+        <img height="39px" width="50%" src="../../assets/img/logo-horizontal.svg">
+    </div>
+    <div class="panel_devices">
+      <h4>Newsletter</h4>
+    </div>
+    <div class="panel__basic-actions" style="background-color: #15c393 !important;"></div>
+  </div>
+
+  <div class="row" style="height: 90vh ;">
+    <!-- PANEL IZQUIERDA  -->
+    <div id="panel_left" class="column" style="flex-basis: 550px;">
+      <div id="title_newsletter">Diseño Newsletter</div>
+      <div id="button_back" style="display: none;">
+        <div style="width: 50px;" (click)="go_back()">
+          <img style="cursor: pointer;" src="../../assets/icon/volverflecha.svg" alt="Atrás" height="100%" width="70%">
+        </div>
+      </div>
+      <div id="botones" style="background-color: white !important;"></div> <!-- BOTONES ESTRUCTURA - ELEMENTOS -->
+      <!-- ESTILOS -->
+      <div id="button_styles" style="display: none;">
+        <div id="title_styles"></div>
+        <div id="styles-container">
+          <div id="contenido" style="display: none;">
+            <div class="gjs-sm-sector no-select">
+              <div class="gjs-sm-title" (click)="show_traits()"><i id="gjs-sm-caret"
+                  class="fa fa-caret-right"></i>Contenido </div>
+              <div id="traits-container" style="display: none;"></div>
+            </div>
+          </div>
+        </div>
+        <!--<div id="selector-container"></div> -->
+
+        
+      </div>
+
+      <div id="blocks"></div> <!-- ESTRUCTURA + ELEMENTOS -->
+      <!--<div id="panel_left_footer"> 
+        <div style="padding: 3px;">
+            <i class="fas fa-desktop"></i>
+            <i class="fas fa-tablet-alt"></i>
+            <i class="fas fa-mobile-alt"></i>
+        </div>
+        <div>
+            <button nz-button nzSize="small" (click)="preview()" style="background-color: #406D63;height: 30px; width: 106px !important;font-weight: 100;font-family: Roboto;"class="ng-star-inserted ant-btn ant-btn-primary">Previsualizar</button>
+        </div>
+          
+        </div>-->
+    </div>
+
+    <!-- Flecha Izquierda -->
+    <div id="panel_flechaIzq">
+      <button nz-button id="closeIzq" type="button" (click)="closePanel('left')"> <i class="fas fa-chevron-left"></i></button>
+      <button nz-button id="openIzq" type="button" (click)="openPanel('left')" style="display: none;"> <i class="fas fa-chevron-right"></i></button>
+    </div>
+
+
+    <!-- CANVAS -->
+    <div class="column editor-clm" style="overflow: hidden;">
+      <div id="gjs">
+      </div>
+    </div>
+
+    <!-- Flecha Derecha -->
+   <div id="panel_flechaDer">
+      <button nz-button id="closeDer" style="display:none" (click)="closePanel('right')"> <i class="fas fa-chevron-right"></i></button>
+      <button nz-button id="openDer" type="button" (click)="openPanel('right')"> <i class="fas fa-chevron-left"></i></button>
+    </div>
+
+    <!-- CAPAS -->
+    <div id="layers" class="column" style="flex-basis: 275px;height: 100% !important;background-color: white !important;box-shadow:rgb(204, 204, 204) -2px 6px 5px 2px;display: none !important">
+      <div class="title_capas"> <i class="fas fa-layer-group"></i> Capas</div>
+      <div id="layers-container"></div>
+    </div>
+
+  </div>
+
+
+  <!-- PANEL INFO -->
+  <!--<div id="info-panel" style="display:none;padding:10px;background-color: #e6e9ec;height: 50vh;">
+    <br />
+    <div style="padding: 5px;background-color: #15c393;">
+      <img width="100%" src="../../assets/logo-curie-newsletter.png" style="background-color: #15c393 !important;">
+    </div>
+    <br />
+    <div style="font-size: 13px;color: #2e3037;">
+      <b> Añadir información </b>
+      <br /><br />
+      <b> Ayuda sobre este módulo</b>
+      <br /><br />
+      <b> Otros</b>
+      <br /><br />
+    </div>
+  </div>-->
+
+</full-content>
+

@@ -1,0 +1,23 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+      <button nz-button (click)="fullPowerResetSearch()" [nzType]="'default'"><i nz-icon nzType="reload" class="ant-table-filter-icon" nzTheme="outline"></i><small>ALL</small></button>
+      <button (click)="add()" nz-button nzType="primary">Nuevo</button>
+  </ng-template>
+</page-header>
+<nz-card>
+  <!-- TABLA -->
+  <st #st [data]="data" [columns]="columns" (change)="change($event)">
+    <!-- COLUMNAS CON FILTRO DE BÚSQUEDA -->
+    <ng-template *ngFor="let cus of custom; let i = index" [st-row]="custom[i]" type="title" >   {{findcolumn(i).title}}  
+      <nz-dropdown nzTrigger="click" [nzClickHide]="false" nzPlacement="bottomCenter" class="position-relative">
+        <div nz-dropdown class="d-inline-block pl-lg"><i nz-icon  nzType="search" [id]="'searchIcon'+i"  class="ant-table-filter-icon icon_search_fill"></i></div>
+        <div class="ant-table-filter-dropdown p-sm">
+          <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchInput[i]" class="width-sm mr-sm">
+          <button nz-button (click)="powerSearch(i)" [nzType]="'primary'">Buscar</button>
+          <button nz-button (click)="powerResetSearch(i)" [nzType]="'default'"><i nz-icon nzType="reload" class="ant-table-filter-icon" nzTheme="outline"></i><small>1</small></button>
+          <button nz-button (click)="fullPowerResetSearch()" [nzType]="'default'"><i nz-icon nzType="reload" class="ant-table-filter-icon" nzTheme="outline"></i><small>ALL</small></button>
+        </div>
+      </nz-dropdown>
+    </ng-template>
+  </st>
+</nz-card>

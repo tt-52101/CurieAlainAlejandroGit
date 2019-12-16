@@ -1,0 +1,23 @@
+
+<full-content (fullscreen)=true>
+  <page-header-wrapper [title]="''" [tab]="phTab" [phContent]="phNgContent"></page-header-wrapper>
+  
+    <!-- STEPPER -->
+    <ng-template #phTab class>
+      <nz-tabset [nzSelectedIndex]="pos" nzSize="large">
+        <nz-tab *ngFor="let i of tabs" [nzTitle]="i.tab" (nzClick)="to(i)"></nz-tab>
+      </nz-tabset>
+    </ng-template>
+
+
+    <!-- BUSCAR CAMPO -->
+    <ng-template #phNgContent></ng-template>
+
+     <!-- PLANTILLAS + SUBIR CODIGO -->
+    <router-outlet></router-outlet>
+  
+</full-content>
+
+
+
+

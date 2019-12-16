@@ -1,0 +1,241 @@
+<full-content (fullscreen)=true> 
+
+  <!-- HEADER -->
+  <ul class="header_mod">
+    <li class="edit_name" ><a>       
+        <input style="text-align:right;width:200px; background: #00A477;margin-right:5px;border: 0px solid #ffff;" nzSize="large" type="text" nz-input placeholder="{{name_form}}" [(ngModel)]="name_form"/>
+        <i class="fas fa-edit"  *ngIf="name_form !== undefined"></i></a>
+      </li>
+    <nz-steps style="background-color: white;" nzSize="small" [nzCurrent]="current">
+        <nz-step class="steps_" nzTitle="Introducción" nzDescription="Nombre Formulario"></nz-step>
+        <nz-step class="steps_" nzTitle="Campos" nzDescription="Seleccionar campos"></nz-step>
+        <nz-step class="steps_" nzTitle="Ordenar" nzDescription="Ordenar campos"></nz-step>
+    </nz-steps>
+  </ul>
+
+  <!-- INTRODUCCIÓN -  NOMBRE FORMULARIO -->
+  <div class="steps-content" *ngIf="index == 'First-content'">
+      
+    <div class="nombre_formulario">
+
+            <div nz-row [nzGutter]="8">
+              <div nz-col [nzSpan]="8">
+                
+                <!-- NOMBRE - DESCRIPCION-->
+                <nz-card nzTitle="General" style="height: 350px;">
+                  <form nz-form [formGroup]="validateForm">
+              
+                      <!-- LABEL NOMBRE -->
+                      <nz-form-item style="margin-bottom: 0;"> 
+                        <nz-form-label class="form_label" [nzSpan]="7" nzRequired nzFor="name_form">Nombre 
+                            <i nz-tooltip nzTitle="Nombre del formulario" class="far fa-question-circle"></i>
+                        </nz-form-label>
+                      </nz-form-item>
+
+                      <!-- ERRORES NOMBRE -->
+                      <nz-form-item>
+                        <nz-form-control [nzSpan]="8">
+                          <input nz-input style="width: 300px;" nzSize="large" type="text" formControlName="name_form" [(ngModel)]="name_form"/>
+                          <nz-form-explain *ngIf="validateForm.get('name_form')?.dirty && validateForm.get('name_form')?.errors">Campo Obligatorio</nz-form-explain>
+                        </nz-form-control>
+                      </nz-form-item>
+                    </form>
+                   
+                    <!--  DESCRIPCION -->
+                    <nz-form-item> 
+                      <nz-form-label class="form_label" [nzSpan]="8" nzFor="descripcion">Descripción
+                          <i nz-tooltip nzTitle="Descripción inicial del formulario" class="far fa-question-circle"></i>
+                      </nz-form-label>
+                      <textarea nz-input placeholder="Descripción" [(ngModel)]="descripcion" rows="4"></textarea>
+                    </nz-form-item>
+                
+                </nz-card>
+              </div>
+            
+              
+              <div nz-col [nzSpan]="8">
+                <!--  MODULOS -->
+                <nz-card nzTitle="Módulos" style="height: 350px;">
+                  <form nz-form [formGroup]="validateForm">
+                    
+                    <!-- LABEL MODULO PRINCIPAL -->
+                    <nz-form-item style="margin-bottom: 0;"> 
+                      <nz-form-label class="form_label" [nzSpan]="10">Módulo Principal 
+                          <i nz-tooltip nzTitle="Contine los campos del módulo principal" class="far fa-question-circle"></i>
+                      </nz-form-label>
+                    </nz-form-item>
+
+                    <!-- MODULO PRINCIPAL -->
+                    <nz-form-item style="text-align:left;">
+                      {{main_module}} 
+                    </nz-form-item>
+
+                    <!-- MODULO SECUNDARIOS -->
+                    <nz-form-item style="text-align:left; margin-top:40px;">
+                      <nz-form-label class="form_label" [nzSpan]="15">Módulos secundarios
+                        <i nz-tooltip nzTitle="Elegir módulos secundarios para relacionarlos con el módulo principal." class="far fa-question-circle"></i>
+                      </nz-form-label>
+                    </nz-form-item>
+
+                    <nz-form-item style="text-align:left;margin-top: 0;">
+                      <nz-select style="width: 340px;" nzMode="multiple" nzPlaceHolder="Seleccionar Módulos" formControlName="selected_modulo" [(ngModel)]="selected_modulo">
+                          <nz-option *ngFor="let option of modulos_total" [nzLabel]="option" [nzValue]="option"></nz-option>
+                      </nz-select>
+                  </nz-form-item>
+              
+                  </form>
+                </nz-card>
+              </div>
+
+               <!-- URL - MENSAJE CONFIRMACION -->
+              <div nz-col [nzSpan]="8">
+                <nz-card nzTitle="Después del envío" style="height: 350px;">
+                   
+                  <!-- LABEL URL -->
+                  <nz-form-item style="margin-bottom: 0;">  
+                    <nz-form-label class="form_label" [nzSpan]="10" nzFor="urlredirect">Redirect URL
+                        <i nz-tooltip nzTitle="Redirigir al usuario a una página" class="far fa-question-circle"></i>
+                    </nz-form-label>
+                  </nz-form-item>
+
+                  <!-- URL -->
+                  <nz-form-item style="text-align:left;">
+                    <input style="width: 300px;" nzSize="large" type="url" nz-input  placeholder="Escribir dirección web" [(ngModel)]="urlredirect"/>
+                  </nz-form-item>
+
+                  <!-- MENSAJE CONFIRMACION -->
+                  <nz-form-item>
+                    <nz-form-label class="form_label" [nzSpan]="13" nzFor="message_confirm">Mensaje
+                      <i nz-tooltip nzTitle="Mostrar un mensaje" class="far fa-question-circle"></i>
+                    </nz-form-label>
+                    <textarea nz-input placeholder="Gracias por enviar el formulario" [(ngModel)]="message_confirm" rows="4"></textarea>
+                  </nz-form-item>
+                          
+                  </nz-card>
+              </div>
+            
+            </div>
+    </div>
+  </div>
+
+
+  <!-- ELEGIR CAMPOS(TABLA) -->
+  <div class="steps-content" *ngIf="index == 'Second-content'">
+
+    <div class="step2_content">
+    
+    <!-- DATOS TABLA -->
+    <st #st [data]="DisplayData" [columns]="columns" [ps]="6" [res]="{process: dataProcess}"  (change)="change($event)"></st>
+   
+      <nz-modal [(nzVisible)]="isVisible" nzTitle="Propiedades del Campo" (nzOnCancel)="closeModal()" (nzOnOk)="closeModal()"><!-- MODAL -->
+        <div *ngFor="let i of modal_date">
+          <div style="display: grid;">
+            <div style="padding:10px; display: grid;"><strong>Nombre del Campo:</strong> {{i.name}}</div>
+            <div style="padding:10px; display: grid;"><strong>Descripción: </strong> {{i.label}}</div>
+            <div style="padding:10px; display: grid;"><strong>Tipo: </strong> {{i.type}}</div>
+            <div *ngIf="i.options !== undefined" style="padding:10px; display: grid;"><strong>Opciones del campo: </strong>  {{i.options}}</div>
+            <div style="padding:10px; display: grid;"><strong>Módulo: </strong> {{i.modulo}}</div>
+            <div style="padding:10px; display: grid;"><strong>Obligatorio: </strong>  {{i.required}}</div>
+          </div>
+        </div>
+      </nz-modal>
+
+    </div>
+  </div>
+
+
+   <!-- STEP 3 -->
+   <div class="steps-content" *ngIf="index == 'third-content'">
+     <div class="step3_content">
+      <div nz-row nzGutter="24" cdkDropListGroup>
+
+         <!-- CAMPOS -->
+        <div nz-col nzSm="24" nzMd="12" nzLg="6" style="margin-top: 20px;"> 
+            <nz-card [nzTitle]="titleTpl" class="ant-card__body-nopadding" [ngStyle]="{'border-top-color': blue,'border-top-width': '4px', 'border-radius': '4px'}">
+                
+              <ng-template #titleTpl> <!-- TITULO-->
+                    <div class="text-center width-100">
+                      <p>Campos</p>
+                    </div>
+              </ng-template>
+
+              <div style="cursor: move;height: 330px; min-height: 330px;overflow-y: scroll;" class="px-sm pt-sm" cdkDropList [cdkDropListData]="campos_end" (cdkDropListDropped)="drop($event)"> 
+                  <div class="example-box" *ngFor="let i of campos_end; let idx=index" cdkDrag class="p-sm mb-sm border-1">
+                     {{i.name}}
+                  </div>
+              </div>
+            </nz-card>
+        </div>
+        
+       
+          <!-- PÁGINAS -->
+          <div style="margin-bottom: 16px;"> <!-- Añadir páginas -->
+              <button nz-button (click)="newTab()">Añadir Página</button>
+          </div>
+
+          <!-- TAB -->
+          <nz-tabset [nzType]="'card'" [nzSelectedIndex]="index">
+              <nz-tab *ngFor="let tab of list" [nzTitle]="titleTemplate">
+                
+                <ng-template #titleTemplate ><!-- Titulo Página-->
+                  <div>{{ tab.page }}
+                    <a nz-popconfirm nzTitle="¿Está seguro que desea eliminar la página?" (nzOnConfirm)="closeTab(tab)" (nzOnCancel)="cancel_page()"> 
+                        <i nz-icon nzType="close" class="ant-tabs-close-x" *ngIf="tab.page !== 'Página 0'"></i>
+                    </a>
+                  </div>
+                </ng-template>
+             
+                <div style="overflow-y: scroll;background-color: white; background-image: url('../../assets/img/drag.png');  background-repeat: no-repeat; background-position: center;cursor: move;height: 330px;;border-bottom:1px solid #e8e8e8;border-right: 1px solid #e8e8e8;border-left: 1px solid #e8e8e8;" class="px-sm pt-sm" cdkDropList [cdkDropListData]="tab.fields" (cdkDropListDropped)="drop($event)"> <!-- Datos Pág-->
+                  <div class="example-box" *ngFor="let i of tab.fields; let idx=index" cdkDrag class="p-sm mb-sm border-1">
+                     {{i.name}}
+                     <!-- Propiedades -->
+                     <button style="float: right;" nz-button nzSize="small" nzType="primary" (click)="showModal(i)">Propiedades</button>
+                     <nz-modal *ngIf="item_actual == i.name" [(nzVisible)]="isVisible" nzTitle="Propiedades del Campo" (nzOnCancel)="closeModal(i)" (nzOnOk)="closeModal(i)">
+
+                      <div style="display: grid;">
+                        <div style="padding:10px; display: grid;"><strong>Nombre del Campo:</strong> {{i.name}}</div>
+                        <div style="padding:10px; display: grid;"><strong>Descripción: </strong> {{i.label}}</div>
+                        <div style="padding:10px; display: grid;"><strong>Tipo: </strong> {{i.type}}</div>
+                        <div style="padding:10px; display: grid;"><strong>Módulo: </strong> {{i.modulo}}</div>
+                        <div style="padding:10px; display: grid;"><strong>Obligatorio: </strong>  {{i.required}}</div>
+                        <div *ngIf="i.options !== undefined" style="padding:10px; display: grid;"><strong>Opciones del campo: </strong>  {{i.options}}</div>
+                      </div>
+
+                    </nz-modal>
+                  </div>
+                </div>
+
+              </nz-tab>
+          </nz-tabset>
+        
+      </div>
+    </div>
+   </div>
+
+
+    <!-- BOTONES -->
+      <div class="step-inicio">
+        <button nz-button nzType="primary" (click)="empezar()" *ngIf="current == 0">
+          <span>Empezar</span>
+        </button>
+      </div>
+
+      <div class="steps-action">
+        <button nz-popconfirm nzTitle="¿Está seguro? Se borrarán los elementos seleccionados en la tabla" (nzOnConfirm)="confirm()" (nzOnCancel)="cancel()" nz-button nzType="default" *ngIf="current > 0 && current < 2">
+          <span>Atrás</span>
+        </button>
+        <button nz-popconfirm nzTitle="¿Está seguro?" (nzOnConfirm)="confirm_()" (nzOnCancel)="cancel_()" nz-button nzType="default" *ngIf="current < 3 && current !== 0 && current !== 1">
+          <span>Atrás</span>
+        </button>
+        <button nz-button nzType="default" (click)="next()" *ngIf="current < 2 && current !== 0">
+          <span>Siguiente</span>
+        </button>
+        <button nz-button nzType="primary" (click)="saveForm()" *ngIf="current < 3 && current !== 0 && current !== 1">
+          <span>Guardar</span>
+        </button>
+      </div>
+
+<div class="footer_">
+</div>
+
+</full-content>

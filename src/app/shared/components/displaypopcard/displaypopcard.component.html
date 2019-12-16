@@ -1,0 +1,21 @@
+<div style="padding: 2px">
+  <!-- BODY + TÍTULO -->
+  <nz-card [ngStyle]="style"
+    (click)="linkto_()"
+    [nzCover]="imgTemplate" 
+    nz-popover nzPlacement="bottom" [nzContent]="descriptionTemplate">
+    <nz-card-meta [nzTitle]="title"></nz-card-meta>
+  </nz-card>
+
+  <!-- IMAGEN -->
+  <ng-template #imgTemplate >
+    <img alt="example" [src]="img" [ngStyle]="style_img"/>
+  </ng-template>
+
+  <!-- DESCRIPCIÓN -->
+  <ng-template #descriptionTemplate >
+    <div style="max-width: 300px">
+        {{description}}
+    </div>
+  </ng-template>
+</div>

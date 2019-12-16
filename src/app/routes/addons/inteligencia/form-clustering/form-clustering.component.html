@@ -1,0 +1,149 @@
+<!-- <nz-card [nzBordered]="false" > -->
+    
+    <!-- VOLVER -->
+    <button nz-button nzType="default" (click)="cancelar()"  >Volver</button>
+    <br><br>
+
+    <!-- ALGORITMO + MODELO -->
+    <nz-select [(ngModel)]="algo_" (ngModelChange)="act_text()" style="width: 300px;" [nzSize]="'large'" nzPlaceHolder="Choose">
+            <nz-option nzValue="kmeans" nzLabel="KMeans"></nz-option>
+            <nz-option nzValue="hdbscan" nzLabel="HDBSCAN"></nz-option>
+            <nz-option nzValue="meanshift" nzLabel="Mean-Shift"></nz-option>
+    </nz-select>
+    <nz-select [(ngModel)]="type_"  style="width: 300px;" [nzSize]="'large'" nzPlaceHolder="Choose">
+            <nz-option nzValue="BuyerContactos" nzLabel="Buyer Persona (Contactos)"></nz-option>
+            <nz-option nzValue="BuyerEmpresa" nzLabel="Buyer Empresa"></nz-option>
+    </nz-select>
+    
+
+    <!-- DESCRIPCIÓN -->
+    <hr>
+    <p>{{description_algo_}}</p>
+
+
+    <!-- NAME -->
+    <hr>    
+    <p optionalHelp="Model identifier for user">Name </p>
+    <input nz-input placeholder="Name"  style="width: 150px;" [(ngModel)]="name"/>
+    <button nz-button nzType="primary" (click)="rand_name()">rand</button>
+
+
+    <!-- FRECUENCIA -->
+    <hr>
+    <p>Frecuency </p>
+    <nz-input-number  [nzMin]="0" [(ngModel)]="time_n_" placeholder="Cantidad"></nz-input-number>
+    :
+    <nz-select [(ngModel)]="time_u_"  style="width: 150px;"  nzPlaceHolder="Choose">
+            <nz-option nzValue="hours" nzLabel="Horas"></nz-option>
+            <nz-option nzValue="days" nzLabel="Días"></nz-option>
+            <nz-option nzValue="weeks" nzLabel="Semanas"></nz-option>
+    </nz-select>
+    from
+    <nz-date-picker [(ngModel)]="date_"></nz-date-picker>
+
+
+    <!-- FORMULARIO -->
+    <hr>
+    <p>Configuration</p>
+    <!-- ----------------------------------KMeans---------------------------------- -->
+    <form nz-form [formGroup]="form_kmeans" (ngSubmit)="submit()" se-container="1" labelWidth="200" *ngIf="algo_=='kmeans'">
+        <se label="{{i18.fanyi('inteligencia.clutering.form.kmeans.n_clusters')}}"  optionalHelp="{{i18.fanyi('inteligencia.clutering.form.kmeans.n_clusters.optional')}}">
+            <nz-radio-group formControlName="n_clusters">
+                <label nz-radio [nzValue]="1">Auto</label>
+                <label nz-radio [nzValue]="2">Define</label>
+            </nz-radio-group>
+            <nz-input-number [nzMin]="1" [nzMax]="30" *ngIf="form_kmeans.value.n_clusters === 2" formControlName="n_clusters_user" placeholder="n Clusters"></nz-input-number>
+        </se>
+        <se label="{{i18.fanyi('inteligencia.clutering.form.kmeans.n_init')}}" optionalHelp="{{i18.fanyi('inteligencia.clutering.form.kmeans.n_init.optional')}}" error="请输入标题">
+            <nz-input-number [nzMin]="1" [nzMax]="300" formControlName="n_init" placeholder="n Clusters"></nz-input-number>
+        </se>
+        <se label="{{i18.fanyi('inteligencia.clutering.form.kmeans.max_iter')}}" optionalHelp="{{i18.fanyi('inteligencia.clutering.form.kmeans.max_iter.optional')}}" error="请输入标题">
+            <nz-input-number [nzMin]="100" [nzMax]="600" formControlName="max_iter" placeholder="n Clusters"></nz-input-number>
+        </se>
+        <se label="{{i18.fanyi('inteligencia.clutering.form.kmeans.algorithm')}}" optionalHelp="{{i18.fanyi('inteligencia.clutering.form.kmeans.algorithm.optional')}}" error="请输入标题">
+            <nz-select style="width: 120px;" formControlName="algorithm" nzPlaceHolder="Choose">
+                <nz-option nzValue="auto" nzLabel="Auto"></nz-option>
+                <nz-option nzValue="full" nzLabel="Full"></nz-option>
+                <nz-option nzValue="elkan" nzLabel="Elkan"></nz-option>
+            </nz-select>
+        </se> 
+        <!-- <se><button nz-button nzType="primary" [disabled]="form_kmeans.invalid" type="submit" [nzLoading]="submitting">Entrenar Modelo Ahora</button></se>  -->
+    </form>
+        
+    <!-- ----------------------------------HDBSCAN---------------------------------- -->
+    <form nz-form [formGroup]="form_hdbscan" (ngSubmit)="submit()" se-container="1" labelWidth="200" *ngIf="algo_=='hdbscan'">
+        <se label="min_cluster_size" optionalHelp="The minimum size of clusters; single linkage splits that contain fewer points than this will be considered points “falling out” of a cluster rather than a cluster splitting into two new clusters." error="请输入标题">
+            <nz-input-number [nzMin]="2" [nzMax]="300" formControlName="min_cluster_size"></nz-input-number>
+        </se>
+        <se label="min_samples"  optionalHelp="The number of samples in a neighbourhood for a point to be considered a core point.">
+            <nz-radio-group formControlName="min_samples">
+                <label nz-radio [nzValue]="0"  >Auto</label>
+                <label nz-radio [nzValue]="1">Define</label>
+            </nz-radio-group>
+            <nz-input-number [nzMin]="0" *ngIf="form_hdbscan.value.min_samples === 1" formControlName="min_samples_user" placeholder="min_samples"></nz-input-number>
+        </se>
+        <se label="alpha"  optionalHelp="A distance scaling parameter as used in robust single linkage. By default alpha is set to 1.0. Increasing alpha will make the clustering more conservative.">
+            <nz-radio-group formControlName="alpha">
+                <label nz-radio [nzValue]="0">Auto</label>
+                <label nz-radio [nzValue]="1">Define</label>
+            </nz-radio-group>
+            <nz-input-number *ngIf="form_hdbscan.value.alpha === 1" [nzStep]="0.1" [nzMin]="0"  formControlName="alpha_user"></nz-input-number>
+        </se>
+        <se label="leaf_size" optionalHelp="If using a space tree algorithm (kdtree, or balltree) the number of points ina leaf node of the tree. This does not alter the resulting clustering, but may have an effect on the runtime of the algorithm." error="请输入标题">
+            <nz-input-number [nzMin]="1" [nzMax]="1000" formControlName="leaf_size"></nz-input-number>
+        </se>
+
+        <se label="allow_single_cluster" optionalHelp="By default HDBSCAN* will not produce a single cluster, setting this to True will override this and allow single cluster results in the case that you feel this is a valid result for your dataset." error="请输入标题">
+            <nz-switch formControlName="allow_single_cluster" nzCheckedChildren="True" nzUnCheckedChildren="False"></nz-switch>
+        </se>
+        <!-- <se><button nz-button nzType="primary" [disabled]="form_hdbscan.invalid" type="submit" [nzLoading]="submitting">Entrenar Modelo Ahora</button></se>  -->
+    </form>
+
+    <!-- ----------------------------------MeanShift---------------------------------- -->
+    <form nz-form [formGroup]="form_meanshift" (ngSubmit)="submit()" se-container="1" labelWidth="200" *ngIf="algo_=='meanshift'">
+        <se label="bandwidth"  optionalHelp="Bandwidth used in the RBF kernel.
+
+        If not given, the bandwidth is estimated using sklearn.cluster.estimate_bandwidth; see the documentation for that function for hints on scalability.">
+            <nz-radio-group formControlName="bandwidth">
+                <label nz-radio [nzValue]="0"  >Auto</label>
+                <label nz-radio [nzValue]="1">Define</label>
+            </nz-radio-group>
+            <nz-input-number [nzMin]="0" *ngIf="form_meanshift.value.bandwidth === 1" formControlName="bandwidth_user" placeholder="bandwidth"></nz-input-number>
+        </se>
+        <se label="bin_seeding" optionalHelp="If true, initial kernel locations are not locations of all points, but rather the location of the discretized version of points, where points are binned onto a grid whose coarseness corresponds to the bandwidth. Setting this option to True will speed up the algorithm because fewer seeds will be initialized. default value: False Ignored if seeds argument is not None." error="请输入标题">
+            <nz-switch formControlName="bin_seeding" nzCheckedChildren="True" nzUnCheckedChildren="False"></nz-switch>
+        </se>
+        <se label="cluster_all" optionalHelp="If true, then all points are clustered, even those orphans that are not within any kernel. Orphans are assigned to the nearest kernel. If false, then orphans are given cluster label -1." error="请输入标题">
+            <nz-switch formControlName="cluster_all" nzCheckedChildren="True" nzUnCheckedChildren="False"></nz-switch>
+        </se>
+        <!-- <se><button nz-button nzType="primary" [disabled]="form_meanshift.invalid" type="submit" [nzLoading]="submitting">Entrenar Modelo Ahora</button></se>  -->
+    </form>
+
+
+    <!-- BOTONES -->
+    <hr>
+    <div nz-row nzJustify="end" nzType="flex">
+        <div nz-col>
+            <button nz-button nzType="primary" nzSize="large" (click)="add_program()"  >Guardar</button>
+            <button nz-button nzType="primary" nzSize="large" (click)="add_program(1)"  >Guardar y Activar</button>
+            <button nz-button nzType="primary" nzSize="large" (click)="submit()" [disabled]="(algo_ != 'meanshift' || form_meanshift.invalid) && (algo_ != 'kmeans' || form_kmeans.invalid) && (algo_ != 'hdbscan' || form_hdbscan.invalid)" type="submit" [nzLoading]="submitting">Testear</button>
+            <button nz-button nzType="default"  nzSize="large" (click)="cancelar()"  >Cancelar</button>
+        </div>
+    </div>
+
+
+
+    <!-- <hr>
+    <button nz-button nzType="primary" (click)="predict_element()">Predict One (Prueba)</button> -->
+
+
+<!-- </nz-card> -->
+
+
+<br *ngIf="loading">
+<nz-spin *ngIf="loading" [nzSize]="'large'" class="centro_inteligencia" nzSimple></nz-spin>
+<pre *ngIf="!loading">{{out_api | json}}</pre>
+
+
+
+<!-- <sf [schema]="schema_meanshift" (formSubmit)="submit($event)"></sf> -->

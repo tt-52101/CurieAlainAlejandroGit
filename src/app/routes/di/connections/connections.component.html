@@ -1,0 +1,19 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <!-- <button (click)="add()" nz-button nzType="primary">Nuevo</button> -->
+
+    <nz-dropdown nzPlacement="bottomRight">
+      <div nz-dropdown nz-button nzType="primary" style="padding-top: 2%;">Crear nuevo</div>
+      <ul nz-menu >
+        <li nz-menu-item #li (click)="add(item)" *ngFor="let item of template">{{item}}</li>
+      </ul>
+    </nz-dropdown>
+  </ng-template>
+</page-header>
+<nz-card>
+  <input nz-input [(ngModel)]="params.name" name="name" nzPlaceHolder="Buscar campo Nombre" style="width: 100px;"
+    class="mr-sm">
+  <button nz-button (click)="search()" [nzType]="'primary'">Buscar</button>
+  <button nz-button (click)="reset_search()" [nzType]="'default'">Reset</button>
+  <st #st [data]="data" [columns]="columns"></st>
+</nz-card>

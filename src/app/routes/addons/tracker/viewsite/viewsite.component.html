@@ -1,0 +1,39 @@
+<full-content (fullscreen)=true>
+  <nz-card nzTitle="Información sobre el sitio web">
+    <nz-tabset [nzSize]="'default'">
+      <nz-tab nzTitle="Visitas">
+        <div id="contenedor">
+          <!--Aqui esta insertada la gráfica-->
+        </div>
+      </nz-tab>
+    </nz-tabset>
+  </nz-card>
+  <nz-card nzTitle="Vista detallada">
+    <div nz-card-grid style="width: 60%">
+      <!-- Tabla -->
+      <st #st [data]="dataTable" [columns]="searchColumn" ps="8" [page]="{toTopInChange:false}">
+        <ng-template *ngFor="let cus of custom; let i = index" [st-row]="custom[i]" type="title">
+          {{findcolumn(i).title}}
+          <nz-dropdown nzTrigger="click" [nzClickHide]="false" nzPlacement="bottomCenter" class="position-relative">
+            <div nz-dropdown class="d-inline-block pl-lg"><i nz-icon nzType="search" class="icon_search_fill ant-table-filter-icon"></i>
+            </div>
+            <div class="ant-table-filter-dropdown p-sm">
+              <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchInput[i]" class="width-sm mr-sm">
+              <button nz-button (click)="powerSearch(i)" [nzType]="'primary'">Buscar</button>
+              <button nz-button (click)="powerResetSearch(i)" [nzType]="'default'"><i nz-icon nzType="reload"
+                  class="ant-table-filter-icon" nzTheme="outline"></i><small>1</small></button>
+              <button nz-button (click)="fullPowerResetSearch()" [nzType]="'default'"><i nz-icon nzType="reload"
+                  class="ant-table-filter-icon" nzTheme="outline"></i><small>ALL</small></button>
+            </div>
+          </nz-dropdown>
+        </ng-template>
+      </st>
+      <!-- Fin de la tabla-->
+    </div>
+    <div nz-card-grid style="width: 40%">
+      <!--Gráfica-->
+      <g2-pie #graf [hasLegend]="true" [data]="dataChart2" height="250" [delay]="2000">
+      </g2-pie>
+    </div>
+  </nz-card>
+</full-content>

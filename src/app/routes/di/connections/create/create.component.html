@@ -1,0 +1,5 @@
+<nz-spin *ngIf="!schema" class="modal-spin"></nz-spin>
+
+<sf *ngIf="schema" #sf mode="edit" [schema]="schema" [ui]="ui"
+  [formData]="schema2" button="none" [layout]="horizontal">
+</sf>

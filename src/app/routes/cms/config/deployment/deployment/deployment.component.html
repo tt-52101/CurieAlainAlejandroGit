@@ -1,0 +1,12 @@
+<div class="main" *ngIf="param">
+  <hr class="ng-star-inserted">
+  <p class="ng-star-inserted">
+    *Remember to configure your DNS to set the domain direction pointing to https://kubernetes.cliente.es*
+    <!-- *Recuerde configurar su DNS para que la dirección del dominio apunte a https://kubernetes.cliente.es* -->
+  </p>
+  <hr class="ng-star-inserted">
+  <div class="left">
+    <!--  FORMULARIO -->
+    <sf [schema]="schema" (formSubmit)="save($event)"></sf>
+  </div>
+</div>

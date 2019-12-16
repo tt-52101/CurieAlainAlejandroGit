@@ -1,0 +1,110 @@
+nz-content {
+    padding:2% 2%;
+}
+
+i {
+    cursor: pointer;
+}
+
+.a-buttons {
+    width:50%;
+}
+
+.b-buttons {
+    width: 50%;
+    padding-right: 50px !important;
+}
+
+.datepicker {
+    margin-right:1px;
+}
+
+.incidence {
+    display:block;
+}
+
+.header {
+    display: flex;
+    padding: 1% 0;
+    div {
+        display: flex;
+        flex-basis: calc(100% / 3);
+    }
+    .center{
+        justify-content: center;
+    }
+    .right{
+        justify-content: flex-end;
+    }
+    button i + span{
+        margin-left: 10px;
+    }
+}
+
+tr{
+    th:nth-child(1), td:nth-child(1) > span {
+        display: flex;
+        justify-content: center;
+    }
+    td:nth-last-child(1) > span{
+        display: flex;
+        justify-content: space-around;
+    }
+}
+
+.footerTable {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0;
+  .totalHours{
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0 5px;
+  }
+}
+
+.masiveActions {
+    text-align: start !important;
+}
+
+.masiveActions a {
+    margin: 0 2%;
+    cursor: pointer;
+}
+
+.masiveActions  a:hover {
+    text-decoration: underline;
+}
+
+.optionWrapper {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+}
+.optionWrapper i {
+  margin-left: 12px;
+}
+.optionWrapper i:hover {
+    color: #1cb084;
+}
+
+.taskSelect{
+  width: 100%;
+  min-width: 200px;
+}
+
+
+.iconDivider{
+  margin: 0;
+}
+
+.emptyImputation{
+  background-color: #ffec3d;
+}
+
+
+[clickable]:hover{
+  cursor: pointer; 
+  text-decoration: underline;
+}

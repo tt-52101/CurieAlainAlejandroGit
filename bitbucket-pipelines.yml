@@ -1,0 +1,29 @@
+# This is a sample build configuration for JavaScript.
+# Check our guides at https://confluence.atlassian.com/x/14UWN for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environmen
+image: node:10.14.2
+
+
+pipelines:
+  default:
+    - step:
+                script: # Modify the commands below to build your repository.
+                  - cd curiealainclientalejandro
+                  - npm install
+                  - pipe: atlassian/sftp-deploy:0.3.1
+                    variables:
+                        USER: 'root'
+                        SERVER: 'alejandro.curieplatform.com'
+                        REMOTE_PATH: '/root/curiealainclientalejandro'
+                        LOCAL_PATH: './'
+                        EXTRA_ARGS: '-P 26728'
+    - step:
+                script:
+                  - pipe: atlassian/ssh-run:0.2.2
+                    variables:
+                        SSH_USER: 'root'
+                        SERVER: 'alejandro.curieplatform.com'
+                        COMMAND: './inicio.sh'
+                        PORT: '26728'                        

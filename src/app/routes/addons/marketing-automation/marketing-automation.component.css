@@ -1,0 +1,14 @@
+svg text {
+  font-family: CurieMAIcons;
+}
+
+@font-face {
+  font-family: "CurieMAIcons";
+  src: url('./Glyphter.woff');
+}
+
+.svg-icon { font-family: FontAwesome; }
+
+.ant-drawer-header {
+  background-color: #40db9f !important;
+}

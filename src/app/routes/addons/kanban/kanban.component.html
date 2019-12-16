@@ -1,0 +1,58 @@
+<full-content (fullscreen)="true">
+  <page-header-wrapper>
+    <div class="filters" >
+      <nz-select adminRole [(ngModel)]="selectedUser" [nzDropdownMatchSelectWidth]="false" (ngModelChange)="changeUser()"
+        nzShowSearch>
+        <nz-option *ngFor="let user of users" [nzValue]="user.id" [nzLabel]="user.label"></nz-option>
+      </nz-select>
+      <nz-week-picker [(ngModel)]="week.date" (ngModelChange)="changeWeek()" [nzLocale]="datepickerConfig"></nz-week-picker>
+      <button nz-button class="addButton" (click)="createTask()">+</button>
+    </div>
+    <section cdkDropListGroup>
+      <div *ngFor="let p of list">
+        <nz-card [nzTitle]="titleTpl" class="ant-card__body-nopadding"
+          [ngStyle]="{'border-top-color': p.color, 'border-top-width': '4px', 'border-radius': '5px'}">
+          <ng-template #titleTpl>
+            <div class="text-center width-100">
+              <span>{{p.title}}</span>
+              <span *ngIf="p.id === 1; else defaultHeaderAux">
+                <span style="margin: 0 1%;" [hidden]="!showCrono">-</span>
+                <app-crono *ngIf="showCrono" [initTime]="initCronoValue"></app-crono>
+              </span>
+              <ng-template #defaultHeaderAux>
+                <span>({{p.list.length}})</span>
+              </ng-template>              
+            </div>
+          </ng-template>
+          <div class="px-sm pt-sm" cdkDropList [cdkDropListData]="p.list" (cdkDropListDropped)="drop($event, p)"
+            class="droplist">
+            <div class="no-data" *ngIf="p.list.length === 0">
+              <i class="fas fa-inbox"></i>
+              <span>Sin datos</span>
+            </div>
+            <div *ngFor="let i of p.list; let idx=index" cdkDrag class="mb-sm border-1 task">
+              <div class="order-container" *ngIf="p.id === 0">
+                <button nz-button class="order-btn"
+                  (click)="updatePriority(i.priority.order)">{{i.priority.order + 1}}</button>
+              </div>
+              <div class="p-sm">
+                <span hidden id="id">{{i.id}}</span>
+                <h2 class="text-truncate text-md mb-xs" (click)="openInCrm(i)" nz-tooltip nzTitle="Ver detalle">{{i.id}}
+                  - {{i.name}}</h2>
+                <p class="text-grey mb-xs">{{i.project}}</p>
+                <p class="text-grey mb-xs">{{i.description}}</p>
+                <p>
+                  <span>Fecha límite:</span>
+                  <span [duedate]="i.date_end">{{i.date_end | date: 'dd-MM-yyyy'}}</span>
+                </p>
+                <nz-tag [nzColor]="i.status.secondary.color" (click)="changeSubStatus(p,i)">
+                  {{ i.status.secondary.label }}
+                </nz-tag>
+              </div>
+            </div>
+          </div>
+        </nz-card>
+      </div>
+    </section>
+  </page-header-wrapper>
+</full-content>
